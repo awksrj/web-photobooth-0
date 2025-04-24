@@ -1,1 +1,1 @@
-# web-photobooth-0
+# web-photobooth
