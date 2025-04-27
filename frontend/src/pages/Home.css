@@ -1,0 +1,71 @@
+:root {
+    --color-maroon: #56021F;
+    --color-pink: #D17D98;
+    /* --color-soft-pink: #ffc0cb;
+    --color-classic-black: #000000; */
+  
+    --font-handwritten: 'Pacifico', cursive;
+    --font-vintage: 'Playfair Display', serif;
+  }
+
+body {
+    background-color: #56021F;
+    color: #56021F;
+}
+
+h1 {
+    font-family: 'Flemish', cursive;
+    color: #D17D98;
+    font-weight: normal;
+    letter-spacing: 2px;
+    text-align: center;
+    font-size: 90px;
+    margin-bottom: 100px;
+}
+
+.background-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: full;
+    height: full;
+    background-color: maroon; 
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: full;
+    height: full;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 2rem 0;
+}
+
+.button {
+    appearance: none;
+    border: 2px solid #F7CFD8;
+    background: transparent;
+    color: #F7CFD8;
+    outline: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 1rem 1.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    transition: all 0.45s ease-out;
+    position: relative;
+  }
+  
+  .button:hover {
+    transform: translateZ(0px);
+    scale: 1.05;
+  }
