@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
+import {colors, fonts} from '../styles/theme.js';
 
 function Home() {
   const navigate = useNavigate();
@@ -14,18 +15,18 @@ function Home() {
   }
 
   return (
-    <div className="home-page">
-      <div className="home-logo">logo</div>
-      <h1>The Photobooth</h1>
-
-      <div className="button-container">
-        <button className="button" onClick={navigateToPhotobooth}>
-          <span>Photo Booth</span>
-        </button>
-        
-        <button className="button" onClick={navigateToPhotostrip}>
-          <span>Photo Strip</span>
-        </button>
+    <div className="background-container">
+      <div className="container">
+        <div className="home-logo">logo</div>
+        <div className="name">The Photobooth</div>
+        <div className="button-container">
+          <button className="button" onClick={navigateToPhotobooth}>
+            <span>take photos</span>
+          </button>
+          <button className="button" onClick={navigateToPhotostrip}>
+            <span>upload photos</span>
+          </button>
+        </div>
       </div>
     </div>
   );

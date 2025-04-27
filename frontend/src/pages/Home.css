@@ -1,14 +1,16 @@
-* {
-    font-size: 18px;
-    font-weight: 20;
-    letter-spacing: 2px;
-    font-family: 'Lucida Bright', sans-serif;
-    text-align: center;
-}
+:root {
+    --color-maroon: #56021F;
+    --color-pink: #D17D98;
+    /* --color-soft-pink: #ffc0cb;
+    --color-classic-black: #000000; */
+  
+    --font-handwritten: 'Pacifico', cursive;
+    --font-vintage: 'Playfair Display', serif;
+  }
 
 body {
     background-color: #56021F;
-    color: whitesmoke;
+    color: #56021F;
 }
 
 h1 {
@@ -21,138 +23,49 @@ h1 {
     margin-bottom: 100px;
 }
 
-/* .buttons {
+.background-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-} */
-
-.photo-container {
-    display: flex;
-    gap: 30px;
+    justify-content: center;
+    width: full;
+    height: full;
+    background-color: maroon; 
 }
 
-.photo-square {
-    width: 300px;
-    height: 300px;
-    border: 2px solid pink;
-    background-color: pink;
+.container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    width: full;
+    height: full;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 2rem 0;
 }
 
 .button {
     appearance: none;
-    border: none;
+    border: 2px solid #F7CFD8;
+    background: transparent;
+    color: #F7CFD8;
     outline: none;
-    background: none;
     cursor: pointer;
     border-radius: 0.5rem;
-
+    padding: 1rem 1.3rem;
     font-size: 1rem;
     font-weight: 600;
     text-transform: lowercase;
-
-    background-color: none;
-    color: white;
-    padding: 1rem 1.3rem;
-}
-
-#upload-photo-button {
+    transition: all 0.45s ease-out;
     position: relative;
-    background-color: transparent;
-    border: 2px solid #F7CFD8;
-    color: #F7CFD8;
-    transition: 0.45s ease-out;
-}
-
-#upload-photo-button span {
-    position: relative;
-    z-index: 8;
-}
-
-#upload-photo-button:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-    width: calc(100% + 0.5rem);
-    height: calc(100% + 0.5rem);
-    border-radius: 0.5rem;
-    border: 2px solid lightslategray;
-    opacity: 0;
-    transition: 0.4s ease-out;
-}
-
-#upload-photo-button:hover {
-    color: #C599B6;
-    border: transparent;
-}
-
-#upload-photo-button:hover::after {
-    background-position: right;
-    width: 100%;
-    height: 100%;
-    opacity: 1;
-    border-color: #F7CFD8;
-}
-
-
-
-#preview-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.preview-image {
-    width: 100px;
-    height: 150px;
-    object-fit: cover;
-    border: 2px solid #ff69b4;
-    border-radius: 5px;
-}
-
-
-
-
-.photo-strip {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    width: max-content;
-    margin: auto;
-    position: relative;
-    background-color: #f4f4f4; /* Light background color */
-}
-
-.photo-strip img {
-    width: 150px; /* Image width */
-    height: 150px; /* Image height */
-    object-fit: cover;
-    border-radius: 10px; /* Rounded corners */
-}
-
-/* Add a background frame to the photo-strip */
-.photo-strip::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    /* background-image: url('image/frame1.png'); Background frame image */
-    background-size: cover;
-    background-position: center;
-    border-radius: 20px;
-    z-index: -1;
-}
-
-
-
+  }
+  
+  .button:hover {
+    transform: translateZ(0px);
+    scale: 1.05;
+  }
