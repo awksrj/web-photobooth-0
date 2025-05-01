@@ -1,16 +1,21 @@
-:root {
-    --color-maroon: #56021F;
-    --color-pink: #D17D98;
-    /* --color-soft-pink: #ffc0cb;
-    --color-classic-black: #000000; */
-  
-    --font-handwritten: 'Pacifico', cursive;
-    --font-vintage: 'Playfair Display', serif;
-  }
+@font-face {
+    font-family: 'Flemish Script';
+    src: url('/public/fonts/OPTIFlemish-Script.otf');
+}
 
 body {
     background-color: #56021F;
-    color: #56021F;
+    color: #ffbdbe;
+}
+
+:root {
+    --color-maroon: #56021F;
+    --color-pink: #F7CFD8;
+    /* --color-soft-pink: #ffc0cb;
+    --color-classic-black: #000000; */
+  
+    --font-handwritten: 'Flemish Script';;
+    --font-vintage: 'Playfair Display', serif;
 }
 
 h1 {
@@ -30,7 +35,16 @@ h1 {
     justify-content: center;
     width: full;
     height: full;
-    background-color: maroon; 
+    background-color: var(--color-maroon); 
+}
+
+.info-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
 }
 
 .container {
@@ -39,33 +53,44 @@ h1 {
     align-items: center;
     justify-content: center;
     width: full;
-    height: full;
+    margin-top: 40px;
+    padding-top: 8px;
+}
+
+.main-page-name {
+    font-family: var(--font-handwritten);
+    color: var(--color-pink);
+    font-size: 80px;
+    margin-bottom: 16px;
 }
 
 .button-container {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin: 2rem 0;
+    flex-direction: row;
+    gap: 16px;
+    margin: 0 rem 0;
 }
 
 .button {
     appearance: none;
-    border: 2px solid #F7CFD8;
-    background: transparent;
-    color: #F7CFD8;
+    border: transparent;
+    background: var(--color-pink);
     outline: none;
     cursor: pointer;
     border-radius: 0.5rem;
-    padding: 1rem 1.3rem;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 1rem 1rem;
+    min-width: 120px;
     text-transform: lowercase;
     transition: all 0.45s ease-out;
     position: relative;
+
+    font-family: var(--font-vintage);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
   }
   
   .button:hover {
     transform: translateZ(0px);
-    scale: 1.05;
+    scale: 1.1  ;
   }
