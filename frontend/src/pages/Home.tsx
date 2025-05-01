@@ -16,9 +16,13 @@ function Home() {
 
   return (
     <div className="background-container">
+      <div className="info-container">
+        <div className="share">share</div>
+        <div className="about">about</div>
+      </div>
       <div className="container">
         <div className="home-logo">logo</div>
-        <div className="name">The Photobooth</div>
+        <div className="main-page-name">The Photobooth</div>
         <div className="button-container">
           <button className="button" onClick={navigateToPhotobooth}>
             <span>take photos</span>
