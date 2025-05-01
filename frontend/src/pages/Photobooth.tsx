@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Photobooth.css";
+import Result from "./Result"; // ✅ Import Result
 
 const Photobooth: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -7,6 +8,7 @@ const Photobooth: React.FC = () => {
   const [photos, setPhotos] = useState<(string | null)[]>([null, null, null]);
   const [isCapturing, setIsCapturing] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
+  const [showResult, setShowResult] = useState(false); // ✅ Add this
 
   useEffect(() => {
     const startCamera = async () => {
@@ -31,16 +33,17 @@ const Photobooth: React.FC = () => {
   }, []);
 
   const startCaptureSequence = async () => {
-    if (isCapturing) return; // prevent double click
+    if (isCapturing) return;
     setIsCapturing(true);
 
     for (let i = 0; i < 3; i++) {
       await runCountdown();
       await takePhotoAtIndex(i);
-      await delay(1000); // Short pause after taking each photo
+      await delay(1000);
     }
 
     setIsCapturing(false);
+    setShowResult(true); // ✅ Show Result view
   };
 
   const runCountdown = async () => {
@@ -74,7 +77,15 @@ const Photobooth: React.FC = () => {
 
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  const allPhotosTaken = photos.every((photo) => photo !== null);
+  const handleRetake = () => {
+    setPhotos([null, null, null]);
+    setShowResult(false);
+  };
+
+  // ✅ Show Result if finished
+  if (showResult) {
+    return <Result photos={photos as string[]} onRetake={handleRetake} />;
+  }
 
   return (
     <div className="photobooth-wrapper">
@@ -85,7 +96,7 @@ const Photobooth: React.FC = () => {
               {photo ? (
                 <img src={photo} alt={`Captured ${index}`} className="photo-preview" />
               ) : (
-                <div className="photo-placeholder-empty"></div>
+                <div className="photo-placeholder-empty" />
               )}
             </div>
           ))}
@@ -101,9 +112,9 @@ const Photobooth: React.FC = () => {
           <button
             className="capture-button"
             onClick={startCaptureSequence}
-            disabled={isCapturing || allPhotosTaken}
+            disabled={isCapturing}
           >
-            {allPhotosTaken ? "Done!" : isCapturing ? "Capturing..." : "Start"}
+            {isCapturing ? "Capturing..." : "Start"}
           </button>
         </div>
 

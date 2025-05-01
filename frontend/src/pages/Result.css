@@ -1,0 +1,35 @@
+.result-wrapper {
+    height: 100vh;
+    background-color: #56021F; /* Same background as your photobooth */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .result-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    background-color: #161515; /* Match the photobooth container */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .result-photo {
+    width: 200px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    background-color: black;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .result-photo.placeholder {
+    color: #aaa;
+    font-size: 14px;
+    font-style: italic;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
