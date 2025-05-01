@@ -7,12 +7,6 @@ import Photostrip from './pages/Photostrip';
 function App() {
   return (
     <Router>
-      <nav style={{ marginBottom: '1rem' }}>
-        <Link to="/" style={{ margin: '0 1rem' }}>Home</Link>
-        <Link to="/photobooth" style={{ margin: '0 1rem' }}>Photobooth</Link>
-        <Link to="/photostrip" style={{ margin: '0 1rem' }}>Photostrip</Link>
-      </nav>
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/photobooth" element={<Photobooth />} />
