@@ -8,7 +8,7 @@ const Photobooth: React.FC = () => {
   const [photos, setPhotos] = useState<(string | null)[]>([null, null, null]);
   const [isCapturing, setIsCapturing] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
-  const [showResult, setShowResult] = useState(false); // ✅ Add this
+  const [showResult, setShowResult] = useState(false); 
 
   useEffect(() => {
     const startCamera = async () => {
@@ -37,22 +37,36 @@ const Photobooth: React.FC = () => {
     setIsCapturing(true);
 
     for (let i = 0; i < 3; i++) {
+      console.log("hello");
       await runCountdown();
       await takePhotoAtIndex(i);
       await delay(1000);
     }
 
     setIsCapturing(false);
-    setShowResult(true); // ✅ Show Result view
+    setShowResult(true); //  Show Result view
   };
 
-  const runCountdown = async () => {
-    for (let i = 3; i > 0; i--) {
+  const runCountdown = (): Promise<void> => {
+    return new Promise((resolve) => {
+      let i = 3;
       setCountdown(i);
-      await delay(1000);
-    }
-    setCountdown(null);
+  
+      const interval = setInterval(() => {
+        i--;
+        if (i > 0) {
+          setCountdown(i);
+        } else {
+          clearInterval(interval);
+          setCountdown(null);
+          resolve();
+        }
+      }, 1000);
+    });
   };
+  
+  
+  
 
   const takePhotoAtIndex = async (index: number) => {
     if (videoRef.current && canvasRef.current) {
@@ -60,12 +74,20 @@ const Photobooth: React.FC = () => {
       const canvas = canvasRef.current;
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-
+  
       const ctx = canvas.getContext("2d");
       if (ctx) {
+        ctx.save(); // Save current state
+  
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1); // Flip horizontally
+  
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+        ctx.restore(); // Restore to default
+  
         const dataUrl = canvas.toDataURL("image/png");
-
+  
         setPhotos((prevPhotos) => {
           const updatedPhotos = [...prevPhotos];
           updatedPhotos[index] = dataUrl;
@@ -74,6 +96,8 @@ const Photobooth: React.FC = () => {
       }
     }
   };
+  
+
 
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
