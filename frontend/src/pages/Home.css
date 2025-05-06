@@ -3,6 +3,11 @@
     src: url('/src/assets/fonts/OPTIFlemish-Script.otf');
 }
 
+@font-face {
+    font-family: 'pretty font';
+    src: url('/src/assets/fonts/BrotherSignature-7BWnK.otf');
+}
+
 body {
     background-color: #56021F;
     color: #ffbdbe;
@@ -15,6 +20,7 @@ body {
     --color-classic-black: #000000; */
   
     --font-handwritten: 'Flemish Script';;
+    --font-pretty: 'pretty font';
     --font-vintage: 'Playfair Display', serif;
 }
 
@@ -61,14 +67,14 @@ h1 {
     font-family: var(--font-handwritten);
     color: var(--color-pink);
     font-size: 80px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 }
 
 .button-container {
     display: flex;
     flex-direction: row;
     gap: 16px;
-    margin: 0 rem 0;
+    margin: 0rem 0;
 }
 
 .button {
@@ -86,7 +92,7 @@ h1 {
 
     /* for text */
     font-family: var(--font-vintage);
-    color: red;
+    color: var(--color-maroon);
     font-size: 1rem;
     font-weight: 600;
   }
