@@ -1,0 +1,96 @@
+@font-face {
+    font-family: 'Flemish Script';
+    src: url('/src/assets/fonts/OPTIFlemish-Script.otf');
+}
+
+@font-face {
+    font-family: 'pretty font';
+    src: url('/src/assets/fonts/BrotherSignature-7BWnK.otf');
+}
+
+body {
+    background-color: #56021F;
+    color: #ffbdbe;
+}
+
+:root {
+    --color-maroon: #56021F;
+    --color-pink: #F7CFD8;
+    /* --color-soft-pink: #ffc0cb;
+    --color-classic-black: #000000; */
+  
+    --font-normal: 'Flemish Script';;
+    --font-pretty: 'pretty font';
+    --font-normal: 'Playfair Display', serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* horizontal centering */
+    justify-content: center; /* vertical centering */
+    /* margin-top: 50px; */
+    width: 100%;
+    height: 100%;
+  }
+
+.text-holder {
+  margin-top: 60px;
+  margin-bottom: 32px;
+  font-family: var(--font-pretty);
+  font-size: 70px;
+  text-align: center;
+}
+
+.photos-holders {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.photo-box {
+  width: 300px;
+  height: 300px;
+  background-color: var(--color-pink); 
+  border: 2px var(--color-maroon); /* maroon border */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-normal);
+  font-size: 1.2rem;
+  color: #56021f;
+}
+
+.photos {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* cover the box while keeping aspect ratio */
+  border-radius: 12px;  /* optional: match the box's corners */
+}
+
+.upload-button {
+    appearance: none;
+    border: transparent;
+    background: var(--color-pink);
+    outline: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 1rem 1rem;
+    min-width: 200px;
+    text-transform: lowercase;
+    transition: all 0.45s ease-out;
+    position: relative;
+
+    /* for text */
+    font-family: var(--font-normal);
+    color: var(--color-maroon);
+    font-size: 23px;
+    font-weight: 500;
+}
+  
+.upload-button:hover {
+    transform: scale(1.05)
+  }
