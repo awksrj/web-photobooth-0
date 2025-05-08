@@ -1,31 +1,7 @@
-@font-face {
-    font-family: 'Flemish Script';
-    src: url('/src/assets/fonts/OPTIFlemish-Script.otf');
-}
-
-@font-face {
-    font-family: 'pretty font';
-    src: url('/src/assets/fonts/BrotherSignature-7BWnK.otf');
-}
-
-body {
-    background-color: #56021F;
-    color: #ffbdbe;
-}
-
-:root {
-    --color-maroon: #56021F;
-    --color-pink: #F7CFD8;
-    /* --color-soft-pink: #ffc0cb;
-    --color-classic-black: #000000; */
-  
-    --font-handwritten: 'Flemish Script';;
-    --font-pretty: 'pretty font';
-    --font-vintage: 'Playfair Display', serif;
-}
+@import './styles.css';
 
 h1 {
-    font-family: 'Flemish', cursive;
+    font-family: 'title font';
     color: #D17D98;
     font-weight: normal;
     letter-spacing: 2px;
@@ -64,9 +40,9 @@ h1 {
 }
 
 .main-page-name {
-    font-family: var(--font-handwritten);
+    font-family: 'title font';
     color: var(--color-pink);
-    font-size: 80px;
+    font-size: var(--font-large);
     margin-bottom: 8px;
 }
 
@@ -91,10 +67,10 @@ h1 {
     position: relative;
 
     /* for text */
-    font-family: var(--font-vintage);
+    font-family: var(--font-normal);
     color: var(--color-maroon);
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
   }
   
   .button:hover {

@@ -1,27 +1,8 @@
-@font-face {
-    font-family: 'Flemish Script';
-    src: url('/src/assets/fonts/OPTIFlemish-Script.otf');
-}
-
-@font-face {
-    font-family: 'pretty font';
-    src: url('/src/assets/fonts/BrotherSignature-7BWnK.otf');
-}
+@import './styles.css';
 
 body {
     background-color: #56021F;
     color: #ffbdbe;
-}
-
-:root {
-    --color-maroon: #56021F;
-    --color-pink: #F7CFD8;
-    /* --color-soft-pink: #ffc0cb;
-    --color-classic-black: #000000; */
-  
-    --font-normal: 'Flemish Script';;
-    --font-pretty: 'pretty font';
-    --font-normal: 'Playfair Display', serif;
 }
 
 .container {
@@ -37,8 +18,9 @@ body {
 .text-holder {
   margin-top: 60px;
   margin-bottom: 32px;
-  font-family: var(--font-pretty);
-  font-size: 70px;
+  font-family: "title font";
+  color: var(--color-pink);
+  font-size: var(--font-large);
   text-align: center;
 }
 
@@ -51,17 +33,20 @@ body {
 }
 
 .photo-box {
-  width: 300px;
-  height: 300px;
-  background-color: var(--color-pink); 
-  border: 2px var(--color-maroon); /* maroon border */
-  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 300px;
+  height: 300px;
+  background-color: var(--color-paler-pink);
+  border-radius: 12px;
+  box-sizing: border-box;
+  background-clip: padding-box;
+
   font-family: var(--font-normal);
   font-size: 1.2rem;
   color: #56021f;
+  border: 8px solid var(--color-pink);
 }
 
 .photos {
@@ -87,7 +72,7 @@ body {
     /* for text */
     font-family: var(--font-normal);
     color: var(--color-maroon);
-    font-size: 23px;
+    font-size: var(--font-small);
     font-weight: 500;
 }
   

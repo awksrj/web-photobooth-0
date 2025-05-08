@@ -1,7 +1,6 @@
 import React from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
-import {colors, fonts} from '../styles/theme.js';
 
 function Home() {
   const navigate = useNavigate();

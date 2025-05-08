@@ -7,6 +7,7 @@ function Photostrip() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [photos, setPhotos] = useState<(string | null)[]>([null, null, null]); // state variable and function to update state
   const clickedIndexRef = useRef<number | null>(null);
+  const [showingResult, setShowingResult] = useState(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files: File[] | null = event.target.files ? Array.from(event.target.files) : null;
@@ -28,9 +29,17 @@ function Photostrip() {
     }
   }
 
+  const navigate = useNavigate();
+
+  const handlePrint = () => {
+    if (photos.every((p) => p !== null)) {
+      navigate("/result", { state: { photos } });
+    }
+  };
+
   return (
     <div className="container">
-      <div className="text-holder">Upload Your Photos!</div>
+      <div className="text-holder">Upload Your Photos</div>
   
       <div className="photos-holders">
         {photos.map((url, index) => (
@@ -41,7 +50,9 @@ function Photostrip() {
       </div>
   
       <input type="file" ref={fileInputRef} accept="image/*" multiple style={{ display: 'none' }} onChange={handleFileChange} />
-      <button className="upload-button" onClick={() => {'./Result.tsx'}}>Continue</button>
+      <button className="upload-button" onClick={handlePrint}>
+        Print with {photos.filter(photo => photo !== null).length} photos
+      </button>
     </div>
   );
 }
