@@ -1,12 +1,17 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Result.css";
 
-interface ResultProps {
-  photos: (string | null)[];
-  onRetake: () => void;
-}
+const Result: React.FC = () => {
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
-const Result: React.FC<ResultProps> = ({ photos }) => {
+  const photos: string[] = state?.photos ?? [];
+
+  const handleRetake = () => {
+    navigate("/photobooth");
+  };
+
   return (
     <div className="result-wrapper">
       <div className="result-strip">
