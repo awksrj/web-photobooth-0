@@ -1,35 +1,66 @@
+/* Result.css */
+
+/* Full‐screen wrapper */
 .result-wrapper {
-    height: 100vh;
-    background-color: #56021F; /* Same background as your photobooth */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  background-color: #56021F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+
+.result-container {
+  position: relative;
+  overflow: hidden;             /* clip the strip as it slides in */
+  background-color: #FFFFFF;
+  padding: 32px;
+  /* border-radius: 12px; */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* print */
+.photostrip-combo {
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-120%); 
+  animation: printDown 0.8s ease-out forwards;
+}
+
+/* Slide‐down keyframes */
+@keyframes printDown {
+  0% {
+    transform: translateY(-120%);
   }
-  
-  .result-strip {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 30px;
-    background-color: #161515; /* Match the photobooth container */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  80% {
+    transform: translateY(10px); 
   }
-  
-  .result-photo {
-    width: 200px;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 10px;
-    background-color: black;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  100% {
+    transform: translateY(0);
   }
-  
-  .result-photo.placeholder {
-    color: #aaa;
-    font-size: 14px;
-    font-style: italic;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+}
+
+/* Individual photo styling */
+.photostrip-combo .result-photo {
+  width: 200px;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder (empty) styling */
+.photostrip-combo .result-photo.placeholder {
+  background-color: #222;
+  color: #aaa;
+  font-style: italic;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
