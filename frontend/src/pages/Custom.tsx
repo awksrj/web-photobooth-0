@@ -41,7 +41,13 @@ const Custom: React.FC = () => {
       })}
     </div>
 
-    <button className="print-button">Print</button>
+    <button
+        className="print-button"
+        onClick={() => navigate("/result", { state: { photos, bgStyle } })}
+>
+        Print
+    </button>
+
   </div>
 </div>
 
@@ -50,6 +56,7 @@ const Custom: React.FC = () => {
       {/* Right side */}
       <div className="customize-right">
         <div ref={comboRef} className="photostrip" style={bgStyle}>
+
           {photos.map((photo, idx) =>
             photo ? (
               <img
