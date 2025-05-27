@@ -12,7 +12,7 @@
 :root {
     --color-maroon: #56021F;
     --color-pink: #F7CFD8;
-    --color-paler-pink: #F1BBD3; 
+    --color-paler-pink: #F5CCDE; 
   
     --font-curve: 'Flemish Script';
     --font-normal: 'Playfair Display', serif;
@@ -20,5 +20,5 @@
     /* Font Sizes */
   --font-large: 60px;
   --font-medium: 1.2rem;
-  --font-small: 24px;
+  --font-small: 20px;
 }
