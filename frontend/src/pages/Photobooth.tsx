@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Photobooth.css";
+import "./styles.css"
 
 const Photobooth: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -127,8 +128,7 @@ const Photobooth: React.FC = () => {
       </div>
 
       <div className="camera-area">
-        <h1 className="camera-title">Say Cheese
-        </h1>
+        <div style={{ fontFamily: "title font", fontSize: "60px", marginBottom: "1px" }}>Capturing Photos</div>
         <div className="camera-wrapper">
           {countdown !== null && (
             <div className="countdown-overlay">{countdown}</div>
