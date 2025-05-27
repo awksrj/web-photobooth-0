@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './Photostrip.css';
 
 function Photostrip() {
-  console.log("Photostrip component rendered");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [photos, setPhotos] = useState<(string | null)[]>([null, null, null]); // state variable and function to update state
   const clickedIndexRef = useRef<number | null>(null);
@@ -33,7 +32,7 @@ function Photostrip() {
 
   const handlePrint = () => {
     if (photos.every((p) => p !== null)) {
-      navigate("/result", { state: { photos } });
+      navigate("/custom", { state: { photos } });
     }
   };
 
