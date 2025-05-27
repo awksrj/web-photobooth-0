@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import "./Result.css";
 import "./styles.css"
+import printIcon from "../assets/images/print_icon.png"
 
 const Result: React.FC = () => {
   const { state } = useLocation();
@@ -12,7 +13,6 @@ const Result: React.FC = () => {
   const bgStyle = state?.bgStyle ?? { background: "#000" }; // fallback background
 
   const comboRef = useRef<HTMLDivElement>(null);
-
 
   const handleReturnHome = () => {
     navigate("/home");
@@ -30,14 +30,25 @@ const Result: React.FC = () => {
       link.href = dataUrl;
       link.download = "photostrip.png";
       link.click();
-    } catch (err) {
-      console.error("Download failed", err);
-    }
+    } 
+    catch (err) { console.error("Download Failed", err); }
   };
 
   return (
     <div className="result-wrapper">
-      <div style={{ fontFamily: "title font", fontSize: "40px", marginBottom: "10px" }}>Printing photostrip</div>
+      <div style={{display: "flex", top: "16px", left: "16px", gap: "5px", alignItems: "center", position: "absolute"}}>
+        <img src="" alt="Return Home" />
+        <button onClick={handleReturnHome} style={{background: "transparent", border: "none",
+            cursor: "pointer",
+            color: "var(--color-maroon);",
+            fontSize: "16px", 
+            fontFamily: "var(--font-normal)"}}>Return Home</button>
+      </div>
+
+      <div style={{display: "flex", flexDirection: "row", alignItems: "center", gap: "10px"}}>
+        <img src={printIcon} alt="Print Icon" style={{width: "40px", height: "40px", marginTop: "-10px", transform: "rotate(-10deg)"}}/>
+        <div style={{ fontFamily: "title font", fontSize: "40px", marginBottom: "10px" }}>Printing Photostrip ...</div>
+      </div>
 
       <div className="result-container">
         {/* Dynamic background applied */}
@@ -54,17 +65,13 @@ const Result: React.FC = () => {
                 alt={`Captured ${index}`}
                 className="result-photo"
               />
-            ) : (
-              <div key={index} className="result-photo placeholder">
-                Empty
-              </div>
-            )
+            ) : (<div key={index} className="result-photo placeholder">Empty</div>)
           )}
         </div>
       </div>
       <div className = "result-actions">
           <button onClick={handleDownload}>Download</button>
-          <button onClick={handleReturnHome}>Return Home</button>
+          <button onClick={handleReturnHome}>Home</button>
         </div>
     </div>
   );
