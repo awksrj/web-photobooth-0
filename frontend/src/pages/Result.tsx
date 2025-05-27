@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import "./Result.css";
-import "./styles.css"
 
 const Result: React.FC = () => {
   const { state } = useLocation();
@@ -13,8 +12,9 @@ const Result: React.FC = () => {
 
   const comboRef = useRef<HTMLDivElement>(null);
 
-  const handleReturnHome = () => {
-    navigate("/home");
+
+  const handleRetake = () => {
+    navigate("/photobooth");
   };
 
   const handleDownload = async () => {
@@ -36,8 +36,6 @@ const Result: React.FC = () => {
 
   return (
     <div className="result-wrapper">
-      <div style={{ fontFamily: "title font", fontSize: "40px", marginBottom: "10px" }}>Printing photostrip</div>
-
       <div className="result-container">
         {/* Dynamic background applied */}
         <div
@@ -61,10 +59,11 @@ const Result: React.FC = () => {
           )}
         </div>
       </div>
-      <div className = "result-actions">
-          <button onClick={handleDownload}>Download</button>
-          <button onClick={handleReturnHome}>Return Home</button>
-        </div>
+
+      <div className="result-actions">
+        <button onClick={handleDownload}>Download</button>
+        <button onClick={handleRetake}>Retake</button>
+      </div>
     </div>
   );
 };
