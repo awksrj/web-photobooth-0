@@ -18,11 +18,26 @@ const Custom: React.FC = () => {
   const comboRef = useRef<HTMLDivElement>(null);
 
   const [bgStyle, setBgStyle] = useState(bgOptions[0].style);
+  const getFormattedDate = (): string => {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  const year = now.getFullYear();
+
+  let hours = now.getHours();
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+
+  return `${month.toString().padStart(2, "0")}/${day
+    .toString()
+    .padStart(2, "0")}/${year} ${hours}:${minutes} ${ampm}`;
+};
 
   return (
     <div className="customize-wrapper">
 <div className="customize-left">
-  <div className="text">Customize Your Photostrip</div>
+  <div className="text">Decorate ♥</div>
 
   <div className="bg-section">
     <label className="bg-label">Background</label>
@@ -56,21 +71,24 @@ const Custom: React.FC = () => {
 
       {/* Right side */}
       <div className="customize-right">
-        <div ref={comboRef} className="photostrip" style={bgStyle}>
+<div ref={comboRef} className="photostrip" style={bgStyle}>
+  {photos.map((photo, idx) =>
+    photo ? (
+      <img
+        key={idx}
+        src={photo}
+        className="result-photo"
+        alt={`Captured ${idx}`}
+      />
+    ) : (
+      <div key={idx} className="result-photo placeholder">Empty</div>
+    )
+  )}
 
-          {photos.map((photo, idx) =>
-            photo ? (
-              <img
-                key={idx}
-                src={photo}
-                className="result-photo"
-                alt={`Captured ${idx}`}
-              />
-            ) : (
-              <div key={idx} className="result-photo placeholder">Empty</div>
-            )
-          )}
-        </div>
+  <div className="timestamp">{getFormattedDate()}</div>
+</div>
+
+        
       </div>
     </div>
   );
