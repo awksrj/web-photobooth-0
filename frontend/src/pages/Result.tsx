@@ -12,6 +12,7 @@ const Result: React.FC = () => {
 
   const comboRef = useRef<HTMLDivElement>(null);
 
+
   const handleRetake = () => {
     navigate("/photobooth");
   };
