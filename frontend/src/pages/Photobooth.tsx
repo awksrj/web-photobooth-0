@@ -45,7 +45,7 @@ const Photobooth: React.FC = () => {
 
   useEffect(() => {
     if (photos.every((p) => p !== null)) {
-      navigate("/result", { state: { photos } });
+      navigate("/custom", { state: { photos } });
     }
   }, [photos, navigate]);
 

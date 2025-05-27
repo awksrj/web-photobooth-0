@@ -7,7 +7,10 @@ import "./styles.css"
 const Result: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+
   const photos: string[] = state?.photos ?? [];
+  const bgStyle = state?.bgStyle ?? { background: "#000" }; // fallback background
+
   const comboRef = useRef<HTMLDivElement>(null);
 
   const handleReturnHome = () => {
@@ -19,26 +22,29 @@ const Result: React.FC = () => {
     try {
       const canvas = await html2canvas(comboRef.current, {
         backgroundColor: null,
-        scale: 2
-      })
+        scale: 2,
+      });
       const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = dataUrl;
       link.download = "photostrip.png";
       link.click();
-    }
-    catch (err) {
+    } catch (err) {
       console.error("Download failed", err);
     }
-  }
+  };
 
   return (
     <div className="result-wrapper">
       <div style={{ fontFamily: "title font", fontSize: "40px", marginBottom: "10px" }}>Printing photostrip</div>
 
       <div className="result-container">
-        {/* Black photostrip “combo” */}
-        <div ref = {comboRef} className="photostrip-combo">
+        {/* Dynamic background applied */}
+        <div
+          ref={comboRef}
+          className="photostrip-combo"
+          style={bgStyle}
+        >
           {photos.map((photo, index) =>
             photo ? (
               <img
