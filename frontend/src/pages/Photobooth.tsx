@@ -45,7 +45,7 @@ const Photobooth: React.FC = () => {
 
   useEffect(() => {
     if (photos.every((p) => p !== null)) {
-      navigate("/result", { state: { photos } });
+      navigate("/custom", { state: { photos } });
     }
   }, [photos, navigate]);
 
@@ -127,6 +127,8 @@ const Photobooth: React.FC = () => {
       </div>
 
       <div className="camera-area">
+        <h1 className="camera-title">Say Cheese
+        </h1>
         <div className="camera-wrapper">
           {countdown !== null && (
             <div className="countdown-overlay">{countdown}</div>
