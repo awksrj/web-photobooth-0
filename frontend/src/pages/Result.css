@@ -1,4 +1,3 @@
-/* Result.css */
 @import './styles.css';
 
 /* Full‐screen wrapper */
@@ -23,17 +22,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  max-height: 65vh;
+  max-width: 90vw;
 }
 
 /* print */
-.photostrip-combo {
-  display: flex;
-  flex-direction: column;
-  transform: translateY(-120%); 
-  padding: 25px;
-  gap: 20px;
+
+.result-photo-final {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; 
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
   animation: printDown 0.8s ease-out forwards;
+
+  margin: 0 auto;            
+  margin-top: 8px;           
+  margin-bottom: 8px;
+
+  display: block;
 }
+
 
 /* Slide‐down keyframes */
 @keyframes printDown {
@@ -48,24 +57,6 @@
   }
 }
 
-/* Individual photo styling */
-.photostrip-combo .result-photo {
-  width: 200px;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-}
-
-/* Placeholder (empty) styling */
-.photostrip-combo .result-photo.placeholder {
-  background-color: #222;
-  color: #aaa;
-  font-style: italic;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 /* buttons */
 .result-actions {
