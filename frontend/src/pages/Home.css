@@ -117,6 +117,7 @@ body {
 .prompt-message {
   margin: 0 0 1rem;
   font-size: 500;
+  font-weight: 500;
   color: var(--color-maroon);
 }
 
@@ -134,8 +135,7 @@ body {
   line-height: 1.4;
   height: calc(1.4em * 3 + 1rem);
   resize: none;
-
-  text-indent: 1rem;
+  text-indent: 0.75rem;
 }
 
 /* actions row */
@@ -152,12 +152,12 @@ body {
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
+  font-family: var(--font-normal);
 }
 
 .prompt-confirm {
   background: var(--color-maroon);
   color: white;
-  font-family: var(--font-normal);
 }
 
 .prompt-cancel {

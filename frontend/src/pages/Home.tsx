@@ -38,6 +38,7 @@ function FeedbackPrompt({message, placeholder = "", onConfirm, onCancel}: Feedba
     </div>
   )
 }
+  
 
 function Home() {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ function Home() {
   //   }
   // }
 
-  // for feedback
+  // FEEDBACK
   const [showPrompt, setShowPrompt] = useState(false);
   const handleClickFeedback = () => setShowPrompt(true);
   const handleConfirm = (text: string) => {
@@ -70,12 +71,32 @@ function Home() {
   const url = window.location.href;
   const smsHref = `sms:?&body=${encodeURIComponent(url)}`;
 
+  // SHARE
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          text: "Checkout this photobooth!",
+          url: window.location.href,
+          title: "",
+        })
+      }
+      catch (err) {
+        console.warn("share failed", err);
+      }
+    }
+    else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!");
+    }
+  }
+
   return (
     <div className="background-container">
 
       <div className="info-container">
-        <div style={{fontFamily: "var(--font-normal)", fontSize: "20px", fontWeight: "500"}}>Share</div>
-        <div onClick={handleClickFeedback} style={{fontFamily: "var(--font-normal)", fontSize: "20px", fontWeight: "500"}}>Feedback</div>
+        <div onClick={handleShare} style={{fontFamily: "var(--font-normal)", fontSize: "20px"}}>Share</div>
+        <div onClick={handleClickFeedback} style={{fontFamily: "var(--font-normal)", fontSize: "20px"}}>Feedback</div>
       </div>
 
       {showPrompt && (
