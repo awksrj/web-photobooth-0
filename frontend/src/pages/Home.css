@@ -25,7 +25,7 @@ body {
 .info-container {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
     position: absolute;
     top: 20px;
     right: 25px;
@@ -169,4 +169,16 @@ body {
 .prompt-confirm:disabled {
   background: #ccc;
   cursor: not-allowed;
+}
+
+.share-icon path,
+.share-icon circle,
+.share-icon rect
+ {
+  /* fill: var(--color-pink); */
+  stroke: var(--color-pink);
+}
+
+.feedback-icon {
+  stroke: var(--color-pink);
 }

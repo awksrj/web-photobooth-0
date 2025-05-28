@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import HomeLogo from "../assets/images/home_logo.png";
 import LeftDecor from "../assets/images/left decor.png";
 import RightDecor from "../assets/images/right_decor.png";
+import { ReactComponent as ShareIcon } from "../assets/images/share-icon.svg";
+import { ReactComponent as FeedbackIcon } from "../assets/images/feedback-icon.svg";
 
 interface FeedbackPromptProps {
   message: string;
@@ -95,8 +97,21 @@ function Home() {
     <div className="background-container">
 
       <div className="info-container">
-        <div onClick={handleShare} style={{fontFamily: "var(--font-normal)", fontSize: "20px"}}>Share</div>
-        <div onClick={handleClickFeedback} style={{fontFamily: "var(--font-normal)", fontSize: "20px"}}>Feedback</div>
+        <button onClick={handleShare} style={{background: "transparent", border: "none", cursor: "pointer"}}>
+          <ShareIcon
+            className='share-icon'
+            width={30}
+            height={30}
+          />
+        </button>
+        <button onClick={handleClickFeedback} style={{background: "transparent", border: "none", cursor: "pointer"}}>
+          <FeedbackIcon
+            className='feedback-icon'
+            width={30}
+            height={30}
+            style = {{ color: "var(--color-pink)", stroke: "var(--color-pink)"}}
+          />
+        </button>
       </div>
 
       {showPrompt && (
