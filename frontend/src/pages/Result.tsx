@@ -9,11 +9,11 @@ const Result: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const photos: string[] = state?.photos ?? [];
-  const bgStyle = state?.bgStyle ?? { background: "#000" }; // fallback background
-  const timestamp = state?.timestamp ?? "";
+  const photostripImage: string = state?.photostripImage ?? "";
 
-  const comboRef = useRef<HTMLDivElement>(null);
+
+  const comboRef = useRef<HTMLImageElement>(null);
+
 
   const handleReturnHome = () => {
     navigate("/home");
@@ -53,23 +53,17 @@ const Result: React.FC = () => {
 
       <div className="result-container">
         {/* Dynamic background applied */}
-        <div
+            {photostripImage ? (
+        <img
           ref={comboRef}
-          className="photostrip-combo"
-          style={bgStyle}
-        >
-          {photos.map((photo, index) =>
-            photo ? (
-              <img
-                key={index}
-                src={photo}
-                alt={`Captured ${index}`}
-                className="result-photo"
-              />
-            ) : (<div key={index} className="result-photo placeholder">Empty</div>)
-          )}
-                  <div className="timestamp">{timestamp}</div>
-        </div>
+          src={photostripImage}
+          alt="Photostrip Result"
+          className="result-photo-final"
+  />
+) : (
+  <p>No photostrip image available.</p>
+)}
+
       </div>
       <div className = "result-actions">
           <button onClick={handleDownload}>Download</button>
