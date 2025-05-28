@@ -6,7 +6,6 @@ import "./styles.css"
 import printIcon from "../assets/images/print_icon.png"
 import { ReactComponent as HouseIcon } from "../assets/images/house-solid.svg";
 
-
 const Result: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -35,6 +34,11 @@ const Result: React.FC = () => {
     } 
     catch (err) { console.error("Download Failed", err); }
   };
+
+  const url = window.location.href;
+
+  // iMessage / SMS deep‐link
+  const smsHref = `sms:?&body=${encodeURIComponent(url)}`;
 
   return (
     <div className="result-wrapper">
@@ -77,7 +81,9 @@ const Result: React.FC = () => {
       </div>
       <div className = "result-actions">
           <button onClick={handleDownload}>Download</button>
-          <button onClick={handleReturnHome}>Share</button>
+          <a href={smsHref} style={{ textDecoration: "none" }}>
+          <button> Share</button>
+      </a>
         </div>
     </div>
   );
