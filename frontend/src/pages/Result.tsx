@@ -11,6 +11,7 @@ const Result: React.FC = () => {
 
   const photos: string[] = state?.photos ?? [];
   const bgStyle = state?.bgStyle ?? { background: "#000" }; // fallback background
+  const timestamp = state?.timestamp ?? "";
 
   const comboRef = useRef<HTMLDivElement>(null);
 
@@ -67,6 +68,7 @@ const Result: React.FC = () => {
               />
             ) : (<div key={index} className="result-photo placeholder">Empty</div>)
           )}
+                  <div className="timestamp">{timestamp}</div>
         </div>
       </div>
       <div className = "result-actions">
