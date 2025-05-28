@@ -4,10 +4,10 @@ import "./Custom.css";
 
 const bgOptions = [
   { name: "Black", style: { background: "#000" } },
-  { name: "Pink", style: { background: "#EDBFD6" } },
-    { name: "Lavender", style: { background: "#E6E6FA" } },
-  { name: "Sky Blue", style: { background: "#87CEEB" } },
-  { name: "Light Green", style: { background: "#D1E8D1" } },
+  { name: "Pink", style: { background: "#f5cac3" } },
+    { name: "Green", style: { background: "#717744" } },
+  { name: "Beige", style: { background: "#d5bdaf" } },
+  { name: "Red", style: { background: "#90323d" } },
 ];
 
 
@@ -19,21 +19,19 @@ const Custom: React.FC = () => {
 
   const [bgStyle, setBgStyle] = useState(bgOptions[0].style);
   const getFormattedDate = (): string => {
-  const now = new Date();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-  const year = now.getFullYear();
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const year = now.getFullYear();
 
-  let hours = now.getHours();
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12;
 
   return `${month.toString().padStart(2, "0")}/${day
     .toString()
-    .padStart(2, "0")}/${year} ${hours}:${minutes} ${ampm}`;
+    .padStart(2, "0")}/${year}`;
 };
+   const timestamp = getFormattedDate();
 
+    
   return (
     <div className="customize-wrapper">
 <div className="customize-left">
@@ -59,7 +57,7 @@ const Custom: React.FC = () => {
 
     <button
         className="print-button"
-        onClick={() => navigate("/result", { state: { photos, bgStyle } })}
+        onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp } })}
 >
         Print
     </button>
