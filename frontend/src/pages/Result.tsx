@@ -12,9 +12,7 @@ const Result: React.FC = () => {
 
   const photostripImage: string = state?.photostripImage ?? "";
 
-
   const comboRef = useRef<HTMLImageElement>(null);
-
 
   const handleReturnHome = () => {
     navigate("/home");
@@ -55,32 +53,31 @@ const Result: React.FC = () => {
         </button>
       </div>
 
-      {/* main content */}
-      <div style={{display: "flex", flexDirection: "row", alignItems: "center", gap: "10px"}}>
-        <img src={printIcon} alt="Print Icon" style={{width: "40px", height: "40px", marginTop: "-10px", transform: "rotate(-10deg)"}}/>
-        <div style={{ fontFamily: "title font", fontSize: "40px", marginBottom: "10px" }}>Printing ...</div>
-      </div>
-
-      <div className="result-container">
-        {/* Dynamic background applied */}
-            {photostripImage ? (
-        <img
-          ref={comboRef}
-          src={photostripImage}
-          alt="Photostrip Result"
-          className="result-photo-final"
-  />
-) : (
-  <p>No photostrip image available.</p>
-)}
-
-      </div>
-      <div className = "result-actions">
-          <button onClick={handleDownload}>Download</button>
-          <a href={smsHref} style={{ textDecoration: "none" }}>
-          <button> Share</button>
-      </a>
+      <div className="main-content-wrapper">
+        <div style={{display: "flex", flexDirection: "row", alignItems: "center", gap: "10px"}}>
+          <img src={printIcon} alt="Print Icon" style={{width: "40px", height: "40px", marginTop: "-10px", transform: "rotate(-10deg)"}}/>
+          <div style={{ fontFamily: "title font", fontSize: "40px", marginBottom: "10px" }}>Printing ...</div>
         </div>
+
+        <div className="result-container">
+          {/* Dynamic background applied */}
+              {photostripImage ? (
+          <img
+            ref={comboRef}
+            src={photostripImage}
+            alt="Photostrip Result"
+            className="result-photo-final"
+          />) : (<p>No photostrip image available.</p>)}
+
+        </div>
+        <div className = "result-actions">
+            <button onClick={handleDownload}>Download</button>
+            <a href={smsHref} style={{ textDecoration: "none" }}>
+              <button> Share</button>
+            </a>
+        </div>
+      </div>
+      
     </div>
   );
 };
