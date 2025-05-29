@@ -4,11 +4,17 @@ import "./Custom.css";
 import html2canvas from "html2canvas";
 
 const bgOptions = [
-  { name: "Black", style: { background: "#000" } },
+  { name: "Black", style: { background: "#000" }},
   { name: "Pink", style: { background: "#f5cac3" } },
   { name: "Green", style: { background: "#717744" } },
   { name: "Beige", style: { background: "#d5bdaf" } },
   { name: "Red", style: { background: "#90323d" } },
+];
+
+const filterOptions = [
+  { name: "None", style: "none", backgroundColor: "#e0e0e0" },
+  { name: "B&W", style: "grayscale(100%)", backgroundColor: "linear-gradient(to right, black 50%, white 50%)"   },
+    { name: "Vivid", style: "contrast(120%) saturate(150%)", backgroundColor: "#dbb42c" },
 ];
 
 const Custom: React.FC = () => {
@@ -18,6 +24,8 @@ const Custom: React.FC = () => {
   const comboRef = useRef<HTMLDivElement>(null);
 
   const [bgStyle, setBgStyle] = useState(bgOptions[0].style);
+  const [filterStyle, setFilterStyle] = useState("none");
+  const [showTimestamp, setShowTimestamp] = useState(true);
 
   const getFormattedDate = (): string => {
     const now = new Date();
@@ -74,11 +82,51 @@ const Custom: React.FC = () => {
               );
             })}
           </div>
-
-          <button className="print-button" onClick={handlePrint}>
-            Print
-          </button>
         </div>
+
+        <div className="filter-section">
+          <label className="bg-label">Filter</label>
+          <div className="bg-picker-thumbnails">
+            {filterOptions.map((opt) => {
+              const isActive = filterStyle === opt.style;
+              const isBW = opt.name === "Black & White";
+              return (
+                <div
+                  key={opt.name}
+                  className={`bg-thumb ${isActive ? "active" : ""} ${isBW ? "bw-thumb" : ""}`}
+                  style={{
+                    background: opt.backgroundColor,
+                    fontSize: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: opt.backgroundColor
+                  }}
+                  onClick={() => setFilterStyle(opt.style)}
+                >
+                                    {isActive && <span className="checkmark">✓</span>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+            
+        <div className="toggle-section">
+          <label className="bg-label">Timestamp</label>
+          <label className="toggle-label">
+            <input
+              type="checkbox"
+              checked={showTimestamp}
+              onChange={() => setShowTimestamp(!showTimestamp)}
+          />
+          <span className="toggle-slider" />
+          </label>
+        </div>
+
+
+        <button className="print-button" onClick={handlePrint}>
+          Print
+        </button>
       </div>
 
       {/* Right side */}
@@ -91,6 +139,7 @@ const Custom: React.FC = () => {
                 src={photo}
                 className="result-photo"
                 alt={`Captured ${idx}`}
+                style={{ filter: filterStyle }}
               />
             ) : (
               <div key={idx} className="result-photo placeholder">
@@ -98,7 +147,8 @@ const Custom: React.FC = () => {
               </div>
             )
           )}
-          <div className="timestamp">{timestamp}</div>
+          {showTimestamp && (<div className="timestamp">{timestamp}</div>)}
+
         </div>
       </div>
     </div>
