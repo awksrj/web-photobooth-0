@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import "./Result.css";
@@ -8,16 +8,21 @@ import { ReactComponent as HouseIcon } from "../assets/images/house-solid.svg";
 
 const Result: React.FC = () => {
   const { state } = useLocation();
-  const navigate = useNavigate();
-
   const photostripImage: string = state?.photostripImage ?? "";
+
+  const photos: string[] = state?.photos ?? [];
+  const bgStyle = state?.bgStyle ?? { background: "#000" }; // fallback background
+  const timestamp = state?.timestamp ?? "";
 
   const comboRef = useRef<HTMLImageElement>(null);
 
+  // return home
+  const navigate = useNavigate();
   const handleReturnHome = () => {
     navigate("/home");
   };
 
+  // download
   const handleDownload = async () => {
     if (!comboRef.current) return;
     try {
@@ -34,9 +39,8 @@ const Result: React.FC = () => {
     catch (err) { console.error("Download Failed", err); }
   };
 
+  // sharing 
   const url = window.location.href;
-
-  // iMessage / SMS deep‐link
   const smsHref = `sms:?&body=${encodeURIComponent(url)}`;
 
   return (
@@ -54,22 +58,27 @@ const Result: React.FC = () => {
       </div>
 
       <div className="main-content-wrapper">
+        {/* text */}
         <div style={{display: "flex", flexDirection: "row", alignItems: "center", gap: "10px"}}>
           <img src={printIcon} alt="Print Icon" style={{width: "40px", height: "40px", marginTop: "-10px", transform: "rotate(-10deg)"}}/>
           <div style={{ fontFamily: "title font", fontSize: "40px", marginBottom: "10px" }}>Printing ...</div>
         </div>
-
+        {/* photobooth box */}
         <div className="result-container">
-          {/* Dynamic background applied */}
-              {photostripImage ? (
-          <img
-            ref={comboRef}
-            src={photostripImage}
-            alt="Photostrip Result"
-            className="result-photo-final"
-          />) : (<p>No photostrip image available.</p>)}
-
+          <div ref={comboRef} className="photostrip-combo" style={bgStyle} >
+          {photos.map((photo, index) =>
+            photo ? (
+              <img
+                key={index}
+                src={photo}
+                alt={`Captured ${index}`}
+                className="individual-photo"
+              />
+            ) : (<div key={index} className="individual-photo placeholder">Empty</div>))}
+            <div className="timestamp">{timestamp}</div>
+          </div>
         </div>
+        {/* share, download button */}
         <div className = "result-actions">
             <button onClick={handleDownload}>Download</button>
             <a href={smsHref} style={{ textDecoration: "none" }}>
@@ -77,7 +86,6 @@ const Result: React.FC = () => {
             </a>
         </div>
       </div>
-      
     </div>
   );
 };
