@@ -1,23 +1,22 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import html2canvas from "html2canvas";
+import React, { useRef } from "react";
 import "./Result.css";
 import "./styles.css"
-import printIcon from "../assets/images/print_icon.png"
+import { href, useLocation, useNavigate } from "react-router-dom";
+import html2canvas from "html2canvas";
 import { ReactComponent as HouseIcon } from "../assets/images/house-solid.svg";
 import { jsPDF } from "jspdf";
 import { error } from "console";
+import printIcon from "../assets/images/print_icon.png"
 
 const Result: React.FC = () => {
   const { state } = useLocation();
-
   const photos: string[] = state?.photos ?? [];
   const bgStyle = state?.bgStyle ?? { background: "#000" }; // fallback background
   const timestamp = state?.timestamp ?? "";
   const showTimestamp: boolean = state?.showTimestamp ?? false;
   const caption: string = state?.caption ?? "";
 
-  const comboRef = useRef<HTMLImageElement>(null);
+  const comboRef = useRef<HTMLDivElement>(null);
 
   // return home
   const navigate = useNavigate();
@@ -25,47 +24,29 @@ const Result: React.FC = () => {
     navigate("/home");
   };
 
-  const generatePDF = async (): Promise<File> => {
+  // common helper fot download and share
+  const generatePDF = async (): Promise<string> => {
     if (!comboRef.current) {
       throw new Error("Nothing to capture");
     }
 
     const el = comboRef.current;
-    const { width, height } = comboRef.current.getBoundingClientRect();
-
     const canvas = await html2canvas(el, {
       backgroundColor: null,
       scale: 2,
-      width,
-      height,
     })
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF({
-      unit: "px",
-      format: [canvas.width, canvas.height],
-    });
-    pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-
-    // 3) Export to Blob → File
-    const blob = pdf.output("blob");
-    return new File([blob], `photostrip_${Date.now()}.pdf`, {
-      type: "application/pdf",
-    });
+    return canvas.toDataURL("image/png");
   }
 
   // download
   const handleDownload = async () => {
     if (!comboRef.current) return;
     try {
-      const pdfFile = await generatePDF();
-      const url = URL.createObjectURL(pdfFile);
+      const imageURL = await generatePDF();
       const link = document.createElement("a");
-      link.href = url;
-      link.download = pdfFile.name;
-      document.body.appendChild(link);
+      link.href = imageURL;
+      link.download = "yourphotostrip";
       link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
     } 
     catch (err) { console.error("Download Failed", err); }
   };
@@ -73,18 +54,22 @@ const Result: React.FC = () => {
   // share 
   const handleShare = async () => {
     try {
-      const pdfFile = await generatePDF();
-      if (navigator.canShare?.({ files: [pdfFile] })) {
+      const dataUrl = await generatePDF();
+      const res  = await fetch(dataUrl);
+      const blob = await res.blob();
+
+      const file = new File([blob], "youresopretty.png", { type: blob.type });
+
+      if (navigator.canShare?.({ files: [file] })) {
         await navigator.share({
-          files: [pdfFile],
-          title: "My Photostrip",
-          text: "Check out my photostrip!",
+          files: [file],
+          text: "Check this out!",
         });
       } else {
-        // Fallback: copy link to clipboard or alert
-        const url = URL.createObjectURL(pdfFile);
+        // fallback: copy a blob:// URL for the user to paste
+        const url = URL.createObjectURL(blob);
         await navigator.clipboard.writeText(url);
-        alert("PDF link copied to clipboard!");
+        alert("Image link copied to clipboard!");
         URL.revokeObjectURL(url);
       }
     } catch (err) {
@@ -116,6 +101,7 @@ const Result: React.FC = () => {
         <div className="result-container">
           <div ref={comboRef} className="photostrip-combo" style={bgStyle} >
           {photos.map((photo, index) =>
+
             photo ? (
               <img
                 key={index}
@@ -132,12 +118,13 @@ const Result: React.FC = () => {
           </div>
         )}
 
+
           </div>
         </div>
         {/* share, download button */}
         <div className = "result-actions">
             <button onClick={handleDownload}>Download</button>
-            <button onClick={handleShare} style={{background: "transparent", border: "none", cursor: "pointer"}}>Share</button>
+            <button onClick={handleShare}>Share</button>
         </div>
       </div>
     </div>
