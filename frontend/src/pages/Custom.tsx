@@ -162,7 +162,7 @@ const Custom: React.FC = () => {
           </label>
         </div>
 
-          <button className="print-button" onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp } })}> Print </button>
+          <button className="print-button" onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp, showTimestamp } })}> Print </button>
 
       </div>
 
