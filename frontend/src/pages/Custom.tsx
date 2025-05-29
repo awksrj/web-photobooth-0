@@ -25,7 +25,7 @@ const Custom: React.FC = () => {
 
   const [bgStyle, setBgStyle] = useState(bgOptions[0].style);
   const [filterStyle, setFilterStyle] = useState("none");
-  const [showTimestamp, setShowTimestamp] = useState(true);
+  const [showTimestamp, setShowTimestamp] = useState(false);
   const [caption, setCaption] = useState("");
 
 
