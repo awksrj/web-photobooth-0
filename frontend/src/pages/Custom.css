@@ -57,7 +57,7 @@
   flex-direction: column;
   gap: 20px;
   padding: 25px;
-  min-height: 500px; 
+  /* min-height: 500px;  */
   justify-content: flex-start;
   position: relative;
 }
@@ -92,10 +92,7 @@
 }
 
 
-
-
 /* Label above thumbnails */
-
 .option-group label {
   font-family: var(--font-normal);
   font-size: var(--font-medium);

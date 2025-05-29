@@ -33,7 +33,6 @@ const Custom: React.FC = () => {
 
   const handlePrint = async () => {
     if (!comboRef.current) return;
-
     try {
       const canvas = await html2canvas(comboRef.current, {
         backgroundColor: null,
