@@ -146,7 +146,7 @@ const Custom: React.FC = () => {
             })}
           </div>
 
-          <button className="print-button" onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp } })}> Print </button>
+
 
         </div>
             
@@ -162,10 +162,8 @@ const Custom: React.FC = () => {
           </label>
         </div>
 
+          <button className="print-button" onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp } })}> Print </button>
 
-        <button className="print-button" onClick={handlePrint}>
-          Print
-        </button>
       </div>
 
       {/* Right Side */}
@@ -182,9 +180,6 @@ const Custom: React.FC = () => {
                 style={{ filter: filterStyle }}
               />
 
-              <div className="result-photo" style={{ backgroundImage: `url(${photo})` }}>
-                {/* <img key={idx} src={photo} alt={`Captured ${idx}`} /> */}
-              </div>
 
             ) : (
               <div key={idx} className="result-photo placeholder">
