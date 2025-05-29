@@ -47,7 +47,7 @@
   /* transform: translateY(-120%);  */
   padding: 25px;
   gap: 20px;
-  animation: printDown 1s ease-out forwards;
+  animation: printDown 2s ease-out forwards;
 }
 
 .photostrip-combo .individual-photo {
