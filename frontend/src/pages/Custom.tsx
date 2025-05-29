@@ -26,6 +26,8 @@ const Custom: React.FC = () => {
   const [bgStyle, setBgStyle] = useState(bgOptions[0].style);
   const [filterStyle, setFilterStyle] = useState("none");
   const [showTimestamp, setShowTimestamp] = useState(true);
+  const [caption, setCaption] = useState("");
+
 
   const getFormattedDate = (): string => {
     const now = new Date();
@@ -62,22 +64,6 @@ const Custom: React.FC = () => {
       });
       const dataUrl = canvas.toDataURL("image/png");
 
-      // const link = document.createElement("a");
-      // link.href = dataUrl;
-      // link.download = `photostrip_${Date.now()}.png`;
-      // document.body.appendChild(link);
-      // link.click();
-      // document.body.removeChild(link);
-
-      // const ctx = canvas.getContext("2d");
-      // if (ctx) {
-      //   ctx.imageSmoothingEnabled = true;
-      //   ctx.imageSmoothingQuality = "high";
-      // }
-
-      // navigate("/result", {
-      //   state: { photostripImage: dataUrl, timestamp, },
-      // });
       canvas.toBlob((blob) => {
     if (!blob) return console.error("No blob produced");
     const file = new File([blob], `photostrip-${Date.now()}.png`, {
@@ -157,9 +143,22 @@ const Custom: React.FC = () => {
           </label>
         </div>
 
-          <button className="print-button" onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp, showTimestamp } })}> Print </button>
+        <div className="caption-section">
+          <label className="bg-label">Caption</label>
+          <input
+            type="text"
+            value={caption}
+            onChange={e => setCaption(e.target.value)}
+            maxLength={22}
+            placeholder="Write something here..."
+            className="caption-input"
+          />
+        </div>
+
+          <button className="print-button" onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp, showTimestamp, caption } })}> Print </button>
 
       </div>
+
 
       {/* Right Side */}
       <div className="customize-right">
@@ -182,7 +181,12 @@ const Custom: React.FC = () => {
               </div>
             )
           )}
-          {showTimestamp && (<div className="timestamp">{timestamp}</div>)}
+        {(caption || showTimestamp) && (
+          <div className="footer-section">
+            {caption && <div className="caption-display">{caption}</div>}
+            {showTimestamp && <div className="timestamp">{timestamp}</div>}
+          </div>
+        )}
 
         </div>
       </div>
