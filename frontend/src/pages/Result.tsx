@@ -8,11 +8,11 @@ import { ReactComponent as HouseIcon } from "../assets/images/house-solid.svg";
 
 const Result: React.FC = () => {
   const { state } = useLocation();
-  const photostripImage: string = state?.photostripImage ?? "";
 
   const photos: string[] = state?.photos ?? [];
   const bgStyle = state?.bgStyle ?? { background: "#000" }; // fallback background
   const timestamp = state?.timestamp ?? "";
+  const showTimestamp: boolean = state?.showTimestamp ?? false;
 
   const comboRef = useRef<HTMLImageElement>(null);
 
@@ -75,7 +75,9 @@ const Result: React.FC = () => {
                 className="individual-photo"
               />
             ) : (<div key={index} className="individual-photo placeholder">Empty</div>))}
+          {showTimestamp && (
             <div className="timestamp">{timestamp}</div>
+          )}
           </div>
         </div>
         {/* share, download button */}
