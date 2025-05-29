@@ -132,15 +132,10 @@ const Custom: React.FC = () => {
                   className={`bg-thumb ${isActive ? "active" : ""} ${isBW ? "bw-thumb" : ""}`}
                   style={{
                     background: opt.backgroundColor,
-                    fontSize: "12px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: opt.backgroundColor
                   }}
                   onClick={() => setFilterStyle(opt.style)}
                 >
-                                    {isActive && <span className="checkmark">✓</span>}
+                    {isActive && <span className="checkmark">✓</span>}
                 </div>
               );
             })}
