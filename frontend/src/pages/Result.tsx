@@ -5,6 +5,8 @@ import "./Result.css";
 import "./styles.css"
 import printIcon from "../assets/images/print_icon.png"
 import { ReactComponent as HouseIcon } from "../assets/images/house-solid.svg";
+import { jsPDF } from "jspdf";
+import { error } from "console";
 
 const Result: React.FC = () => {
   const { state } = useLocation();
@@ -22,26 +24,72 @@ const Result: React.FC = () => {
     navigate("/home");
   };
 
+  const generatePDF = async (): Promise<File> => {
+    if (!comboRef.current) {
+      throw new Error("Nothing to capture");
+    }
+
+    const el = comboRef.current;
+    const { width, height } = comboRef.current.getBoundingClientRect();
+
+    const canvas = await html2canvas(el, {
+      backgroundColor: null,
+      scale: 2,
+      width,
+      height,
+    })
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF({
+      unit: "px",
+      format: [canvas.width, canvas.height],
+    });
+    pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+
+    // 3) Export to Blob → File
+    const blob = pdf.output("blob");
+    return new File([blob], `photostrip_${Date.now()}.pdf`, {
+      type: "application/pdf",
+    });
+  }
+
   // download
   const handleDownload = async () => {
     if (!comboRef.current) return;
     try {
-      const canvas = await html2canvas(comboRef.current, {
-        backgroundColor: null,
-        scale: 2,
-      });
-      const dataUrl = canvas.toDataURL("image/png");
+      const pdfFile = await generatePDF();
+      const url = URL.createObjectURL(pdfFile);
       const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "photostrip.png";
+      link.href = url;
+      link.download = pdfFile.name;
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     } 
     catch (err) { console.error("Download Failed", err); }
   };
 
-  // sharing 
-  const url = window.location.href;
-  const smsHref = `sms:?&body=${encodeURIComponent(url)}`;
+  // share 
+  const handleShare = async () => {
+    try {
+      const pdfFile = await generatePDF();
+      if (navigator.canShare?.({ files: [pdfFile] })) {
+        await navigator.share({
+          files: [pdfFile],
+          title: "My Photostrip",
+          text: "Check out my photostrip!",
+        });
+      } else {
+        // Fallback: copy link to clipboard or alert
+        const url = URL.createObjectURL(pdfFile);
+        await navigator.clipboard.writeText(url);
+        alert("PDF link copied to clipboard!");
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error("Share failed", err);
+    }
+  }
 
   return (
     <div className="result-wrapper">
@@ -81,9 +129,7 @@ const Result: React.FC = () => {
         {/* share, download button */}
         <div className = "result-actions">
             <button onClick={handleDownload}>Download</button>
-            <a href={smsHref} style={{ textDecoration: "none" }}>
-              <button> Share</button>
-            </a>
+            <button onClick={handleShare} style={{background: "transparent", border: "none", cursor: "pointer"}}>Share</button>
         </div>
       </div>
     </div>
