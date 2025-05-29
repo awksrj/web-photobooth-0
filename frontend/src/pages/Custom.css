@@ -169,6 +169,90 @@
   padding-top: 10px;
 }
 
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.filter-section .bg-thumb {
+  color: var(--color-maroon);
+  font-family: var(--font-normal);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 2px solid var(--color-pink);
+
+}
+
+.filter-section .bg-thumb.active {
+  border-color: var(--color-pink);
+}
+
+/* — Toggle Switch Container — */
+.toggle-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  font-family: var(--font-normal);
+  font-size: var(--font-medium);
+  color: var(--color-maroon);
+  cursor: pointer;
+}
+
+.toggle-label span {
+  margin-left: 0;
+}
+
+/* hide the native checkbox */
+.toggle-label input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+/* the visual slider */
+.toggle-slider {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+/* knob */
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 2px;
+  top: 2px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* when checked, slide knob & change bg */
+.toggle-label input:checked + .toggle-slider {
+  background: var(--color-pink);
+}
+.toggle-label input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
 
 
 /* Button */

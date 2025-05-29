@@ -11,6 +11,12 @@ export const bgOptions = [
   { name: "Red", style: { background: "#90323d" } },
 ];
 
+const filterOptions = [
+  { name: "None", style: "none", backgroundColor: "#e0e0e0" },
+  { name: "B&W", style: "grayscale(100%)", backgroundColor: "linear-gradient(to right, black 50%, white 50%)"   },
+    { name: "Vivid", style: "contrast(120%) saturate(150%)", backgroundColor: "#dbb42c" },
+];
+
 const Custom: React.FC = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -18,6 +24,8 @@ const Custom: React.FC = () => {
   const comboRef = useRef<HTMLDivElement>(null);
 
   const [bgStyle, setBgStyle] = useState(bgOptions[0].style);
+  const [filterStyle, setFilterStyle] = useState("none");
+  const [showTimestamp, setShowTimestamp] = useState(true);
 
   const getFormattedDate = (): string => {
     const now = new Date();
@@ -109,14 +117,55 @@ const Custom: React.FC = () => {
               );
             })}
           </div>
-
-          <button
-        className="print-button"
-        onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp } })}
->
-        Print
-    </button>
         </div>
+
+
+        <div className="filter-section">
+          <label className="bg-label">Filter</label>
+          <div className="bg-picker-thumbnails">
+            {filterOptions.map((opt) => {
+              const isActive = filterStyle === opt.style;
+              const isBW = opt.name === "Black & White";
+              return (
+                <div
+                  key={opt.name}
+                  className={`bg-thumb ${isActive ? "active" : ""} ${isBW ? "bw-thumb" : ""}`}
+                  style={{
+                    background: opt.backgroundColor,
+                    fontSize: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: opt.backgroundColor
+                  }}
+                  onClick={() => setFilterStyle(opt.style)}
+                >
+                                    {isActive && <span className="checkmark">✓</span>}
+                </div>
+              );
+            })}
+          </div>
+
+          <button className="print-button" onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp } })}> Print </button>
+
+        </div>
+            
+        <div className="toggle-section">
+          <label className="bg-label">Timestamp</label>
+          <label className="toggle-label">
+            <input
+              type="checkbox"
+              checked={showTimestamp}
+              onChange={() => setShowTimestamp(!showTimestamp)}
+          />
+          <span className="toggle-slider" />
+          </label>
+        </div>
+
+
+        <button className="print-button" onClick={handlePrint}>
+          Print
+        </button>
       </div>
 
       {/* Right Side */}
@@ -124,16 +173,27 @@ const Custom: React.FC = () => {
         <div ref={comboRef} className="photostrip" style={bgStyle}>
           {photos.map((photo, idx) =>
             photo ? (
+
+              <img
+                key={idx}
+                src={photo}
+                className="result-photo"
+                alt={`Captured ${idx}`}
+                style={{ filter: filterStyle }}
+              />
+
               <div className="result-photo" style={{ backgroundImage: `url(${photo})` }}>
                 {/* <img key={idx} src={photo} alt={`Captured ${idx}`} /> */}
               </div>
+
             ) : (
               <div key={idx} className="result-photo placeholder">
                 Empty
               </div>
             )
           )}
-          <div className="timestamp">{timestamp}</div>
+          {showTimestamp && (<div className="timestamp">{timestamp}</div>)}
+
         </div>
       </div>
     </div>
