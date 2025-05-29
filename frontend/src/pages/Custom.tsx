@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./Custom.css";
 import html2canvas from "html2canvas";
 
-const bgOptions = [
-  { name: "Black", style: { background: "#000" }},
+export const bgOptions = [
+  { name: "Black", style: { background: "#000" } },
   { name: "Pink", style: { background: "#f5cac3" } },
   { name: "Green", style: { background: "#717744" } },
   { name: "Beige", style: { background: "#d5bdaf" } },
@@ -41,19 +41,54 @@ const Custom: React.FC = () => {
 
   const handlePrint = async () => {
     if (!comboRef.current) return;
+    const el = comboRef.current;
+
+    await Promise.all(
+    Array.from(el.querySelectorAll("img")).map((img: HTMLImageElement) =>
+      img.complete
+        ? Promise.resolve()
+        : new Promise((res) => { img.onload = img.onerror = () => res(null); })
+    )
+  );
+
+
+    const {width, height} = el.getBoundingClientRect();
     try {
-      const canvas = await html2canvas(comboRef.current, {
+      const canvas = await html2canvas(el, {
         backgroundColor: null,
-        scale: 2,
+        scale: (window.devicePixelRatio || 1) * 3,
+        width,
+        height,
       });
       const dataUrl = canvas.toDataURL("image/png");
 
-      navigate("/result", {
-        state: {
-          photostripImage: dataUrl,
-          timestamp,
-        },
-      });
+      // const link = document.createElement("a");
+      // link.href = dataUrl;
+      // link.download = `photostrip_${Date.now()}.png`;
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
+
+      // const ctx = canvas.getContext("2d");
+      // if (ctx) {
+      //   ctx.imageSmoothingEnabled = true;
+      //   ctx.imageSmoothingQuality = "high";
+      // }
+
+      // navigate("/result", {
+      //   state: { photostripImage: dataUrl, timestamp, },
+      // });
+      canvas.toBlob((blob) => {
+    if (!blob) return console.error("No blob produced");
+    const file = new File([blob], `photostrip-${Date.now()}.png`, {
+      type: "image/png",
+    });
+
+    // navigate, passing the File
+    navigate("/result", {
+      state: { photostripFile: file, timestamp },
+    });
+  }, "image/png");
     } catch (err) {
       console.error("Failed to generate photostrip image", err);
     }
@@ -84,6 +119,7 @@ const Custom: React.FC = () => {
           </div>
         </div>
 
+
         <div className="filter-section">
           <label className="bg-label">Filter</label>
           <div className="bg-picker-thumbnails">
@@ -109,6 +145,9 @@ const Custom: React.FC = () => {
               );
             })}
           </div>
+
+          <button className="print-button" onClick={() => navigate("/result", { state: { photos, bgStyle, timestamp } })}> Print </button>
+
         </div>
             
         <div className="toggle-section">
@@ -129,11 +168,12 @@ const Custom: React.FC = () => {
         </button>
       </div>
 
-      {/* Right side */}
+      {/* Right Side */}
       <div className="customize-right">
         <div ref={comboRef} className="photostrip" style={bgStyle}>
           {photos.map((photo, idx) =>
             photo ? (
+
               <img
                 key={idx}
                 src={photo}
@@ -141,6 +181,11 @@ const Custom: React.FC = () => {
                 alt={`Captured ${idx}`}
                 style={{ filter: filterStyle }}
               />
+
+              <div className="result-photo" style={{ backgroundImage: `url(${photo})` }}>
+                {/* <img key={idx} src={photo} alt={`Captured ${idx}`} /> */}
+              </div>
+
             ) : (
               <div key={idx} className="result-photo placeholder">
                 Empty
