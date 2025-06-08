@@ -14,6 +14,7 @@ const Result: React.FC = () => {
   const bgStyle = state?.bgStyle ?? { background: "#000" }; // fallback background
   const timestamp = state?.timestamp ?? "";
   const showTimestamp: boolean = state?.showTimestamp ?? false;
+  const caption: string = state?.caption ?? "";
 
   const comboRef = useRef<HTMLDivElement>(null);
 
@@ -100,10 +101,24 @@ const Result: React.FC = () => {
         <div className="result-container">
           <div ref={comboRef} className="photostrip-combo" style={bgStyle} >
           {photos.map((photo, index) =>
-            photo 
-              ? (<img key={index} src={photo} alt={`Captured ${index}`} className="individual-photo"/>) 
-              : (<div key={index} className="individual-photo placeholder">Empty</div>))}
-          {showTimestamp && (<div className="timestamp">{timestamp}</div>)}
+
+            photo ? (
+              <img
+                key={index}
+                src={photo}
+                alt={`Captured ${index}`}
+                className="individual-photo"
+              />
+            ) : (<div key={index} className="individual-photo placeholder">Empty</div>))}
+
+        {(caption || showTimestamp) && (
+          <div className="footer-section">
+            {caption && <div className="caption-display">{caption}</div>}
+            {showTimestamp && <div className="timestamp">{timestamp}</div>}
+          </div>
+        )}
+
+
           </div>
         </div>
         {/* share, download button */}
