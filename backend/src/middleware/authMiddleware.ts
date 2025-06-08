@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 
 interface JwtPayload {
   id: string; // you can add more fields depending on what you store in the token
+  email: string;
+  accName: string;
 }
 
 // Extend Express Request to include `user`
@@ -20,7 +22,7 @@ export default function authMiddleware(
   const token = req.headers['authorization'];
 
   if (!token) {
-    return res.status(401).send("Access Denied");
+    return res.status(401).json({ error: "Access Denied - No token provided" });
   }
 
   try {
