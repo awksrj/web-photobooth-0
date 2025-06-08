@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const User = require('./models/User.ts');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtockent');
+import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
 
 // Register
-router.post('/register', async (req, res) => {
+router.post('/register', async (req: Request, res: Response) => {
     const { name, email, password, accountName, birthYear } = req.body;
 
     if (!name || !email || !password || !accountName) {
@@ -32,7 +33,7 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
 
