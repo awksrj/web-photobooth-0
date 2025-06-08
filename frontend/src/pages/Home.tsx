@@ -6,6 +6,8 @@ import LeftDecor from "../assets/images/left decor.png";
 import RightDecor from "../assets/images/right_decor.png";
 import { ReactComponent as ShareIcon } from "../assets/images/share-icon.svg";
 import { ReactComponent as FeedbackIcon } from "../assets/images/feedback-icon.svg";
+import { auth, googleProvider, signInWithPopup } from "../config/firebase";
+
 
 interface FeedbackPromptProps {
   message: string;
@@ -61,6 +63,31 @@ function Home() {
   //   }
   // }
 
+  // LOGIN
+  const [showAuthOptions, setShowAuthOptions] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      alert(`Welcome ${result.user.displayName}!`);
+      setShowAuthOptions(false);
+    } catch (error) {
+      console.error("Google login error:", error);
+      alert("Login failed. Please try again.");
+    }
+  };
+
+// const handleFacebookLogin = async () => {
+//     try {
+//       const result = await signInWithPopup(auth, facebookProvider);
+//       alert(`Welcome ${result.user.displayName}!`);
+//       setShowAuthOptions(false);
+//     } catch (error) {
+//       console.error("Facebook login error:", error);
+//       alert("Login failed. Please try again.");
+//     }
+//   };
+
   // FEEDBACK
   const [showPrompt, setShowPrompt] = useState(false);
   const handleClickFeedback = () => setShowPrompt(true);
@@ -112,6 +139,9 @@ function Home() {
             style = {{ color: "var(--color-pink)", stroke: "var(--color-pink)"}}
           />
         </button>
+        <span className="auth-text" onClick={handleGoogleLogin}>
+          Log In
+        </span>
       </div>
 
       {showPrompt && (
@@ -122,6 +152,15 @@ function Home() {
           onCancel={handleCancel}
         />
       )}
+
+      {showAuthOptions && (
+        <div className="auth-popup-overlay">
+          <div className="auth-popup">
+          <h3 className="auth-title">Login / Sign Up</h3>
+        </div>
+      </div>
+      )}
+
 
       <div className='decor-container'>
         
@@ -137,6 +176,7 @@ function Home() {
             <button className="button" onClick={navigateToPhotostrip}>
               <span>Upload Photos</span>
             </button>
+            
           </div>
         </div>
 

@@ -182,3 +182,17 @@ body {
 .feedback-icon {
   stroke: var(--color-pink);
 }
+
+.auth-text {
+  color: var(--color-pink);
+  cursor: pointer;
+  font-family: var(--font-normal);
+  font-size: 1rem;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.auth-text:hover {
+  opacity: 0.8;
+}
