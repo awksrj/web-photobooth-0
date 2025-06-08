@@ -65,6 +65,25 @@ function Home() {
 
   // LOGIN
   const [showAuthOptions, setShowAuthOptions] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+
+  const handleOpenLogin = () => {
+    setIsSignUp(false);
+    setShowAuthOptions(true);
+  };
+  const handleSignUpClick = () => setIsSignUp(true);
+  const handleSignInClick = () => setIsSignUp(false);
+
+  const handleLocalLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // TODO: call your own API to verify username/password
+    setShowAuthOptions(false);
+  };
+  const handleLocalSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // TODO: call your own API to create account
+    setShowAuthOptions(false);
+  };
 
   const handleGoogleLogin = async () => {
     try {
@@ -139,7 +158,7 @@ function Home() {
             style = {{ color: "var(--color-pink)", stroke: "var(--color-pink)"}}
           />
         </button>
-        <span className="auth-text" onClick={handleGoogleLogin}>
+        <span className="auth-text" onClick={handleOpenLogin}>
           Log In
         </span>
       </div>
@@ -156,9 +175,106 @@ function Home() {
       {showAuthOptions && (
         <div className="auth-popup-overlay">
           <div className="auth-popup">
-          <h3 className="auth-title">Login / Sign Up</h3>
+            {isSignUp ? (
+              <>
+                <h3 className="auth-title">Sign Up</h3>
+                <form className="auth-form" onSubmit={handleLocalSignUp}>
+                  <input
+                    name="username"
+                    type="text"
+                    placeholder="Username"
+                    className="auth-input"
+                    required
+                  />
+                  <input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    className="auth-input"
+                    required
+                  />
+                  <input
+                    name="confirm"
+                    type="password"
+                    placeholder="Confirm password"
+                    className="auth-input"
+                    required
+                  />
+                  <input
+                    name="email"
+                    type="email"
+                    placeholder="E-mail address"
+                    className="auth-input"
+                    required
+                  />
+                  <button type="submit" className="auth-submit">
+                    Sign Up
+                  </button>
+                </form>
+
+                <div className="auth-divider">or sign up with</div>
+                <button
+                  className="auth-button google"
+                  onClick={handleGoogleLogin}
+                >
+                  Continue with Google
+                </button>
+
+                <div className="auth-switch">
+                  Have an account?{' '}
+                  <button className="auth-link" onClick={handleSignInClick}>
+                    Sign In
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h3 className="auth-title">Log In</h3>
+                <form className="auth-form" onSubmit={handleLocalLogin}>
+                  <input
+                    name="username"
+                    type="text"
+                    placeholder="Username or E-mail"
+                    className="auth-input"
+                    required
+                  />
+                  <input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    className="auth-input"
+                    required
+                  />
+                  <button type="submit" className="auth-submit">
+                    Sign In
+                  </button>
+                </form>
+
+                <div className="auth-divider">or</div>
+                <button
+                  className="auth-button google"
+                  onClick={handleGoogleLogin}
+                >
+                  Continue with Google
+                </button>
+
+                <div className="auth-switch">
+                  New user?{' '}
+                  <button className="auth-link" onClick={handleSignUpClick}>
+                    Sign Up
+                  </button>
+                </div>
+              </>
+            )}
+
+            <button
+              className="auth-close"
+              onClick={() => setShowAuthOptions(false)}
+            >
+              Close
+            </button>
+          </div>
         </div>
-      </div>
       )}
 
 
