@@ -42,7 +42,6 @@ function FeedbackPrompt({message, placeholder = "", onConfirm, onCancel}: Feedba
     </div>
   )
 }
-  
 
 function Home() {
   const navigate = useNavigate();
@@ -71,19 +70,107 @@ function Home() {
     setIsSignUp(false);
     setShowAuthOptions(true);
   };
+
   const handleSignUpClick = () => setIsSignUp(true);
   const handleSignInClick = () => setIsSignUp(false);
 
-  const handleLocalLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLocalLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: call your own API to verify username/password
-    setShowAuthOptions(false);
+    setIsLoading(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const credentials = {
+      username: formData.get('username') as string,
+      password: formData.get('password') as string,
+    };
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
+      }
+
+      const data = await response.json();
+      
+      // Store token and user data
+      localStorage.setItem('authToken', data.token);
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+      
+      // Redirect to dashboard or home page
+      navigate('/home');
+    } 
+    catch (error) {
+      console.error('Login error:', error);
+      setError(error instanceof Error ? error.message : 'Login failed');
+    } 
+    finally {
+      setIsLoading(false);
+    }
   };
-  const handleLocalSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleLocalSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: call your own API to create account
-    setShowAuthOptions(false);
-  };
+
+    const formData = new FormData(e.currentTarget);
+    const username = formData.get("username")?.toString().trim();
+    const password = formData.get("password")?.toString();
+    const confirm = formData.get("confirm")?.toString();
+    const email = formData.get("email")?.toString().trim();
+
+    if (!username || !password || !confirm || !email) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    if (password !== confirm) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5050/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: username,
+          email,
+          password,
+          accountName: username, 
+          birthYear: null, // optional, can leave out or add another field
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Account created successfully!");
+        setShowAuthOptions(false);
+      } 
+      else {
+        alert(data.error || "Registration failed.");
+      }
+    } catch (error) {
+    console.error("Signup error:", error);
+    alert("Something went wrong during registration.");
+    }
+};
+
 
   const handleGoogleLogin = async () => {
     try {
@@ -116,8 +203,8 @@ function Home() {
   }
   const handleCancel = () => setShowPrompt(false);
 
-  const url = window.location.href;
-  const smsHref = `sms:?&body=${encodeURIComponent(url)}`;
+  // const url = window.location.href;
+  // const smsHref = `sms:?&body=${encodeURIComponent(url)}`;
 
   // SHARE
   const handleShare = async () => {

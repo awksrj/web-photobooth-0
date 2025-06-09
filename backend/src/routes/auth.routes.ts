@@ -20,8 +20,10 @@ router.post(
     async (req: Request, res: Response) => {
         const { name, email, password, accountName, birthYear } = req.body as RegisterRequestBody;
         if (!name || !email || !password || !accountName) {
-            return res.status(400).json({ error: "missing required fields!"});
+            return res.status(400).json({ error: "Missing Required fields!"});
         }
+        console.log("Received body:", req.body);
+
         const hashed = await bcrypt.hash(req.body.password, 10);
         const user = new User({ name,
             email,
@@ -33,13 +35,14 @@ router.post(
 
             // generate token with more info
             const token = jwt.sign(
-                { id: user._id, email: user.email, accName: user.accountName },
+                { id: user._id, email: user.email, accountName: user.accountName },
                 process.env.JWT_SECRET!,
                 { expiresIn: '7d' }
             );
-            return res.send({ message: "user registered!", token });
+            return res.send({ message: "User Registered!", token });
         }
         catch (err) {
+            console.error("Registration error:", err);
             return res.status(500).json({ error: "registration failed", details: err });
         }
 });
