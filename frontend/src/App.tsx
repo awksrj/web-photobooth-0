@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter  as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Photobooth from './pages/Photobooth';
 import Photostrip from './pages/Photostrip';
@@ -8,8 +8,9 @@ import Custom from './pages/Custom';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/web-photobooth-0">
       <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/photobooth" element={<Photobooth />} />
         <Route path="/photostrip" element={<Photostrip />} />
