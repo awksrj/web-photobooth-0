@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import HomeLogo from "../assets/images/home_logo.png";
@@ -44,15 +44,25 @@ function FeedbackPrompt({message, placeholder = "", onConfirm, onCancel}: Feedba
 }
 
 function Home() {
-  const navigate = useNavigate();
-  
-  const navigateToPhotobooth = () => {
-    navigate('/photobooth');
-  }
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accountName, setAccountName] = useState("");
+  const [showDropDown, setShowDropDown] = useState(false);
 
-  const navigateToPhotostrip = () => {
-    navigate('/photostrip');
-  }
+  const AccountDropDown = () => (
+    <div className='account-dropdown'>
+      <div className='dropdown-item' onClick={handleNavigateToGallery}>My Gallery</div>
+      <div className='dropdown-item' onClick={handleToSettings}>Settings</div>
+      <div className='dropdown-item' onClick={handleLogOut}>Log Out</div>
+    </div>
+  )
+
+  const navigate = useNavigate();
+
+  const handleLogOut = () => { };
+  const handleToSettings = () => { };
+  const handleNavigateToGallery = () => { }  
+  const navigateToPhotobooth = () => { navigate('/photobooth'); }
+  const navigateToPhotostrip = () => { navigate('/photostrip'); }
 
   // const handleSendFeedback = () => {
   //   const response = window.prompt("Share with us your thoughts!", "");
@@ -70,6 +80,10 @@ function Home() {
     setIsSignUp(false);
     setShowAuthOptions(true);
   };
+
+  const handleShowDropDown = () => {
+    setShowDropDown(!showDropDown);
+  }
 
   const handleSignUpClick = () => setIsSignUp(true);
   const handleSignInClick = () => setIsSignUp(false);
@@ -108,6 +122,8 @@ function Home() {
       localStorage.setItem('authToken', data.token);
       if (data.user) {
         localStorage.setItem('user', JSON.stringify(data.user));
+        setIsAuthenticated(true);
+        setAccountName(data.user.accountName);
       }
       
       // Redirect to dashboard or home page
@@ -175,6 +191,8 @@ function Home() {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
+      setIsAuthenticated(true);
+      setAccountName(result.user.displayName || "user");
       alert(`Welcome ${result.user.displayName}!`);
       setShowAuthOptions(false);
     } catch (error) {
@@ -182,6 +200,22 @@ function Home() {
       alert("Login failed. Please try again.");
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    const userData = localStorage.getItem('user');
+
+    if (token && userData) {
+      try {
+        const user = JSON.parse(userData);
+        setIsAuthenticated(true);
+        setAccountName(user.accountName || user.email);
+      }
+      catch (error) {
+        console.error("Error parsing user data: ", error);
+      }
+    }
+  }, [])
 
 // const handleFacebookLogin = async () => {
 //     try {
@@ -245,9 +279,10 @@ function Home() {
             style = {{ color: "var(--color-pink)", stroke: "var(--color-pink)"}}
           />
         </button>
-        <span className="auth-text" onClick={handleOpenLogin}>
-          Log In
+        <span className="auth-text" onClick={isAuthenticated ? handleShowDropDown : handleOpenLogin}>
+          {isAuthenticated ? accountName : "Log In"}
         </span>
+        {isAuthenticated && showDropDown && <AccountDropDown />}
       </div>
 
       {showPrompt && (
