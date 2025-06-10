@@ -58,7 +58,21 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const handleLogOut = () => { };
+  const handleLogOut = () => { 
+    // clear authentiation data from local storage
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+
+    // reset 
+    setIsAuthenticated(false);
+    setAccountName("");
+    setShowDropDown(false);
+    navigate("/home");
+
+    auth.signOut().catch(console.error);
+
+    alert("You have been logged out successfully!");
+  }
   const handleToSettings = () => { };
   const handleNavigateToGallery = () => { }  
   const navigateToPhotobooth = () => { navigate('/photobooth'); }
