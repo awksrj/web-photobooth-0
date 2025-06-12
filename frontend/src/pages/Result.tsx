@@ -81,6 +81,16 @@ const Result: React.FC = () => {
     }
   }
 
+  // save
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const handleSaveClick = () => {
+    setShowSaveModal(true);
+  };
+
+    const handleGoToGallery = () => {
+    navigate("/gallery"); 
+  };
+
   // account
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accountName, setAccountName] = useState("");
@@ -164,6 +174,12 @@ const Result: React.FC = () => {
         </div>
         {/* photobooth box */}
         <div className="result-container">
+          <button
+            className="save-btn"
+            onClick={handleSaveClick}
+          >
+            Save
+          </button>
           <div ref={comboRef} className="photostrip-combo" style={bgStyle} >
           {photos.map((photo, index) =>
 
@@ -192,6 +208,16 @@ const Result: React.FC = () => {
             <button onClick={handleShare}>Share</button>
         </div>
       </div>
+   {showSaveModal && (
+      <div className="save-modal-overlay">
+        <div className="save-modal">
+          <p>Saved to your gallery</p>
+          <button onClick={handleGoToGallery}>
+            Go to your gallery
+          </button>
+        </div>
+      </div>
+    )}
     </div>
   );
 };
