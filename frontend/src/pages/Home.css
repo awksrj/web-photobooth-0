@@ -19,16 +19,17 @@ body {
     justify-content: center;
     width: 100%;
     height: full;
-    background-color: var(--color-maroon); 
+    background: var(--color-maroon); 
 }
 
 .info-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     position: absolute;
     top: 20px;
     right: 25px;
+    justify-content: flex-end;
 }
 
 .decor-container {
@@ -183,24 +184,38 @@ body {
   stroke: var(--color-pink);
 }
 
-.info-container {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 16px;
-}
-.icon-btn {
+/* .icon-btn {
   background: transparent;
   border: none;
   cursor: pointer;
+} */
+
+.auth-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    appearance: none;
+    border: red;
+    background: var(--color-pink);
+    outline: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 0.7rem 1rem;
+    text-align: center;
+    position: relative;
+}
+
+.auth-button:hover {
+    opacity: 0.8;
 }
 
 .auth-text {
-  color: var(--color-pink);
+  color: var(--color-maroon);
   cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;;
   font-size: 1rem;
 }
+
 .auth-text:hover {
   opacity: 0.8;
 }

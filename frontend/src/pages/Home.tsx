@@ -293,10 +293,14 @@ function Home() {
             style = {{ color: "var(--color-pink)", stroke: "var(--color-pink)"}}
           />
         </button>
-        <span className="auth-text" onClick={isAuthenticated ? handleShowDropDown : handleOpenLogin}>
-          {isAuthenticated ? accountName : "Log In"}
-        </span>
-        {isAuthenticated && showDropDown && <AccountDropDown />}
+        <button
+          className="auth-button"
+          onClick={isAuthenticated ? handleShowDropDown : handleOpenLogin}
+        >
+          <span className="auth-text">
+            {isAuthenticated ? accountName : "Log in"}
+          </span>
+        </button>
       </div>
 
       {showPrompt && (
@@ -348,7 +352,7 @@ function Home() {
                   </button>
                 </form>
 
-                <div className="auth-divider">or sign up with</div>
+                <div className="auth-divider">OR</div>
                 <button
                   className="auth-button google"
                   onClick={handleGoogleLogin}
@@ -386,7 +390,7 @@ function Home() {
                   </button>
                 </form>
 
-                <div className="auth-divider">or</div>
+                <div className="auth-divider">OR</div>
                 <button
                   className="auth-button google"
                   onClick={handleGoogleLogin}
