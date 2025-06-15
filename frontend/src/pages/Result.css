@@ -169,3 +169,84 @@
   border-top: 1px solid #eee;
   color: #e74c3c;
 }
+
+/* save */
+.result-container { position: relative; }
+.save-btn {
+  display: none;                
+  position: absolute;           
+  top: 50%;                     
+  left: 50%;                    
+  transform: translate(-50%, -50%);
+  z-index: 10;                  
+  background: var(--color-pink);
+  color: var(--color-maroon);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--font-small);
+  font-family: var(--font-normal);
+  transition: opacity 0.2s ease;
+}
+.result-container:hover .save-btn {
+  display: block;
+  opacity: 1;
+}
+
+.result-container {
+  position: relative; 
+}
+
+.result-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0);       
+  transition: background 0.3s ease;
+  z-index: 5;                          
+}
+
+.result-container:hover::before {
+  background: rgba(255, 255, 255, 0.6);     
+}
+
+.photostrip-combo {
+  position: relative;
+  z-index: 1;                         
+  transition: transform 0.3s ease;
+}
+.result-container:hover .photostrip-combo {
+  transform: scale(0.98);             
+}
+
+/* confirmation modal */
+.save-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.save-modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+.save-modal p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+.save-modal button {
+  background: var(--color-pink);
+  color: var(--color-maroon);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
