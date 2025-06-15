@@ -3,7 +3,7 @@
 
 Try out photobooth! Link to our website: https://awksrj.github.io/web-photobooth-0/#/home
 
-![](frontend\src\assets\images\main-page.png)
+![Main Page](frontend\src\assets\images\main-page.png)
 
 
 
