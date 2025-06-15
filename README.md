@@ -1,9 +1,9 @@
 
 # The Photobooth
 
-Try out photobooth! Link to our website: https://awksrj.github.io/web-photobooth-0/#/home
+Try out photobooth! Link to our website: https://awksrj.github.io/web-photobooth-0
 
-![Main Page](frontend\src\assets\images\main-page.png)
+![Main Page](main-page.png)
 
 
 
