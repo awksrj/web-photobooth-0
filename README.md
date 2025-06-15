@@ -27,7 +27,7 @@ The Photobooth brings the classic photobooth experience to the browser. Users ca
 - **Backend:** Node.js, TypeScript
 - **Database:** MongoDB
 - **Authentication:** Firebase
-- **Camera API**: navigator.mediaDevices, html2canvas, jsPDF
+- **Camera & Export**: navigator.mediaDevices, html2canvas, jsPDF
 ## Getting Started
 
 ### Prerequisites
