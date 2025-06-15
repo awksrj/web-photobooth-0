@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect} from "react";
 import "./Result.css";
 import "./styles.css"
 import { href, useLocation, useNavigate } from "react-router-dom";
@@ -7,6 +7,10 @@ import { ReactComponent as HouseIcon } from "../assets/images/house-solid.svg";
 import { jsPDF } from "jspdf";
 import { error } from "console";
 import printIcon from "../assets/images/print_icon.png"
+import { auth } from "../config/firebase";
+import { ReactComponent as ShareIcon } from "../assets/images/share-icon.svg";
+
+
 
 const Result: React.FC = () => {
   const { state } = useLocation();
@@ -77,6 +81,55 @@ const Result: React.FC = () => {
     }
   }
 
+  // account
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accountName, setAccountName] = useState("");
+  const [showDropDown, setShowDropDown] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    const userData = localStorage.getItem('user');
+
+    if (token && userData) {
+      try {
+        const user = JSON.parse(userData);
+        setIsAuthenticated(true);
+        setAccountName(user.accountName || user.email);
+      } catch (error) {
+        console.error("Error parsing user data: ", error);
+      }
+    }
+  }, []);
+
+    const handleShowDropDown = () => {
+    setShowDropDown(!showDropDown);
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+
+    setIsAuthenticated(false);
+    setAccountName("");
+    setShowDropDown(false);
+    navigate("/home");
+
+    auth.signOut().catch(console.error);
+    alert("You have been logged out successfully!");
+  };
+
+  const handleToSettings = () => { };
+  const handleNavigateToGallery = () => { };
+
+  const AccountDropDown = () => (
+    <div className='account-dropdown'>
+      <div className='dropdown-item' onClick={handleNavigateToGallery}>My Gallery</div>
+      <div className='dropdown-item' onClick={handleToSettings}>Settings</div>
+      <div className='dropdown-item' onClick={handleLogOut}>Log Out</div>
+    </div>
+  );
+
+
   return (
     <div className="result-wrapper">
       {/* home button */}
@@ -85,6 +138,18 @@ const Result: React.FC = () => {
                 style={{background: "transparent", border: "none", cursor: "pointer"}}> 
           <HouseIcon width={35} height={35} style={{ fill: "var(--color-pink)" }} />
         </button>
+
+      </div>
+
+      {/*account*/ }
+      <div className="info-container">
+        <button onClick={handleShare} style={{ background: "transparent", border: "none", cursor: "pointer" }}>
+          <ShareIcon className='share-icon' width={30} height={30} />
+        </button>
+        <span className="auth-text" onClick={isAuthenticated ? handleShowDropDown : () => navigate('/home')}>
+          {isAuthenticated ? accountName : "Log In"}
+        </span>
+        {isAuthenticated && showDropDown && <AccountDropDown />}
       </div>
 
       <div className="main-content-wrapper">

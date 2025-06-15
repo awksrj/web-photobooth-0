@@ -205,6 +205,13 @@ function Home() {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+      localStorage.setItem("authToken", idToken);
+      const userObj = {
+        accountName: result.user.displayName || result.user.email,
+        email: result.user.email,
+      };
+      localStorage.setItem("user", JSON.stringify(userObj));
       setIsAuthenticated(true);
       setAccountName(result.user.displayName || "user");
       alert(`Welcome ${result.user.displayName}!`);
