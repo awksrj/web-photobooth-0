@@ -83,11 +83,7 @@ const Result: React.FC = () => {
       <div style={{display: "flex", top: "20px", left: "16px", gap: "5px", alignItems: "center", position: "absolute"}}>
         <button onClick={handleReturnHome} 
                 style={{background: "transparent", border: "none", cursor: "pointer"}}> 
-          <HouseIcon
-            width={35}
-            height={35}
-            style={{ fill: "var(--color-pink)" }}
-          />
+          <HouseIcon width={35} height={35} style={{ fill: "var(--color-pink)" }} />
         </button>
       </div>
 
@@ -102,14 +98,8 @@ const Result: React.FC = () => {
           <div ref={comboRef} className="photostrip-combo" style={bgStyle} >
           {photos.map((photo, index) =>
 
-            photo ? (
-              <img
-                key={index}
-                src={photo}
-                alt={`Captured ${index}`}
-                className="individual-photo"
-              />
-            ) : (<div key={index} className="individual-photo placeholder">Empty</div>))}
+            photo ? ( <img key={index} src={photo} alt={`Captured ${index}`} className="individual-photo" />) 
+                  : (<div key={index} className="individual-photo placeholder">Empty</div>))}
 
         {(caption || showTimestamp) && (
           <div className="footer-section">
@@ -117,9 +107,8 @@ const Result: React.FC = () => {
             {showTimestamp && <div className="timestamp">{timestamp}</div>}
           </div>
         )}
-
-
           </div>
+          
         </div>
         {/* share, download button */}
         <div className = "result-actions">
