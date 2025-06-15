@@ -129,6 +129,9 @@ const Result: React.FC = () => {
     </div>
   );
 
+  const handleOpenLogin = () => {
+    
+  }
 
   return (
     <div className="result-wrapper">
@@ -146,10 +149,17 @@ const Result: React.FC = () => {
         <button onClick={handleShare} style={{ background: "transparent", border: "none", cursor: "pointer" }}>
           <ShareIcon className='share-icon' width={30} height={30} />
         </button>
-        <span className="auth-text" onClick={isAuthenticated ? handleShowDropDown : () => navigate('/home')}>
+        <button
+          className="auth-button"
+          onClick={isAuthenticated ? handleShowDropDown : handleOpenLogin}
+        >
+          <span className="auth-text" onClick={isAuthenticated ? handleShowDropDown : () => navigate('/home')}>
           {isAuthenticated ? accountName : "Log In"}
         </span>
         {isAuthenticated && showDropDown && <AccountDropDown />}
+        </button>
+
+        
       </div>
 
       <div className="main-content-wrapper">
@@ -173,7 +183,7 @@ const Result: React.FC = () => {
           </div>
         )}
           </div>
-          
+
         </div>
         {/* share, download button */}
         <div className = "result-actions">
