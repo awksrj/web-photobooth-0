@@ -301,6 +301,7 @@ function Home() {
             {isAuthenticated ? accountName : "Log in"}
           </span>
         </button>
+        {isAuthenticated && showDropDown && AccountDropDown()}
       </div>
 
       {showPrompt && (

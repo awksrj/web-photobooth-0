@@ -5,6 +5,7 @@ import Photobooth from './pages/Photobooth';
 import Photostrip from './pages/Photostrip';
 import Result from './pages/Result';
 import Custom from './pages/Custom';
+import Gallery from './pages/Gallery';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/photostrip" element={<Photostrip />} />
         <Route path="/result" element={<Result />} />
         <Route path="/custom" element={<Custom />} />
+        <Route path="/gallery" element={<Gallery />} />
       </Routes>
     </Router>
   );
