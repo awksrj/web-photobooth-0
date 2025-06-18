@@ -5,12 +5,10 @@ import { href, useLocation, useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { ReactComponent as HouseIcon } from "../assets/images/house-solid.svg";
 import { jsPDF } from "jspdf";
-import { error } from "console";
+import { error, time } from "console";
 import printIcon from "../assets/images/print_icon.png"
 import { auth } from "../config/firebase";
 import { ReactComponent as ShareIcon } from "../assets/images/share-icon.svg";
-
-
 
 const Result: React.FC = () => {
   const { state } = useLocation();
@@ -83,8 +81,32 @@ const Result: React.FC = () => {
 
   // save
   const [showSaveModal, setShowSaveModal] = useState(false);
-  const handleSaveClick = () => {
-    setShowSaveModal(true);
+  const handleSaveClick = async () => {
+    if (!comboRef.current) return;
+    const canvas = await html2canvas(comboRef.current);
+    const imageData = canvas.toDataURL("image/png");
+    try {
+      const response = await fetch("api/save-photostrip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          imageData,
+          caption,
+          timestamp,
+        })
+      })
+      if (response.ok) {
+        setShowSaveModal(true);
+      }
+      else {
+        console.error("Failed to save!");
+      }
+    }
+    catch (error) {
+      console.log("Error: ", error);
+    }
   };
 
     const handleGoToGallery = () => {
@@ -139,6 +161,9 @@ const Result: React.FC = () => {
     </div>
   );
 
+  const handleOpenLogin = () => {
+    
+  }
 
   return (
     <div className="result-wrapper">
@@ -146,11 +171,7 @@ const Result: React.FC = () => {
       <div style={{display: "flex", top: "20px", left: "16px", gap: "5px", alignItems: "center", position: "absolute"}}>
         <button onClick={handleReturnHome} 
                 style={{background: "transparent", border: "none", cursor: "pointer"}}> 
-          <HouseIcon
-            width={35}
-            height={35}
-            style={{ fill: "var(--color-pink)" }}
-          />
+          <HouseIcon width={35} height={35} style={{ fill: "var(--color-pink)" }} />
         </button>
 
       </div>
@@ -160,10 +181,17 @@ const Result: React.FC = () => {
         <button onClick={handleShare} style={{ background: "transparent", border: "none", cursor: "pointer" }}>
           <ShareIcon className='share-icon' width={30} height={30} />
         </button>
-        <span className="auth-text" onClick={isAuthenticated ? handleShowDropDown : () => navigate('/home')}>
+        <button
+          className="auth-button"
+          onClick={isAuthenticated ? handleShowDropDown : handleOpenLogin}
+        >
+          <span className="auth-text" onClick={isAuthenticated ? handleShowDropDown : () => navigate('/home')}>
           {isAuthenticated ? accountName : "Log In"}
         </span>
         {isAuthenticated && showDropDown && <AccountDropDown />}
+        </button>
+
+        
       </div>
 
       <div className="main-content-wrapper">
@@ -207,10 +235,8 @@ const Result: React.FC = () => {
               
             </div>
 
-
-
-
           </div>
+
         </div>
         {/* share, download button */}
         <div className = "result-actions">
