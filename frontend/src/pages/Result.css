@@ -30,18 +30,13 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-
-  overflow: hidden;             /* hide the strip if outside container */
+  overflow: visible;             /* hide the strip if outside container */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   background-color: #D9D9D9;
-  padding: 20px 30px ;
-  padding-bottom: 10px;
-  
-  /* width: ; */
-  max-width: 90vw;
+  padding: 30px ;
   height: auto;
-  max-height: 70vh;
+  max-height: none;
 }
 
 /* photostrip */
@@ -71,6 +66,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.photostrip-mask {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* your existing combo animation */
+.photostrip-combo {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 25px;
+  animation: printDown 2s ease-out forwards;
 }
 
 .caption-display {
