@@ -42,7 +42,7 @@
 
 /* Right panel: photostrip centered */
 .customize-right {
-  width: 220px;
+  width: 310px;
   display: flex;
   justify-content: flex-start; 
   align-items: center;
@@ -57,14 +57,13 @@
   flex-direction: column;
   gap: 20px;
   padding: 25px;
-  /* min-height: 500px;  */
   justify-content: flex-start;
   position: relative;
 }
 
 .result-photo {
-  width: 200px;
-  height: 160px;
+  width: 100%;
+  aspect-ratio: 4/3;
   overflow: hidden;
   position: relative;
   object-fit: cover;
