@@ -51,8 +51,8 @@
 }
 
 .photostrip-combo .individual-photo {
-  width: calc(100% - 0px);
-  height: 130px;
+  width: 100%;
+  aspect-ratio: 4/3;
   object-fit: cover;
   display: block;
 }
@@ -69,7 +69,7 @@
 }
 
 .photostrip-mask {
-  width: 100%;
+  width: 270px;
   overflow: hidden;
 }
 
