@@ -82,9 +82,13 @@ const Result: React.FC = () => {
   // save
   const [showSaveModal, setShowSaveModal] = useState(false);
   const handleSaveClick = async () => {
-    if (!comboRef.current) return;
+    if (!comboRef.current) {
+      alert("Nothing to save!");
+      return;
+    };
     const canvas = await html2canvas(comboRef.current);
     const imageData = canvas.toDataURL("image/png");
+    console.log("I'm in the handleSaveClick function");
     try {
       const response = await fetch("api/save-photostrip", {
         method: "POST",
