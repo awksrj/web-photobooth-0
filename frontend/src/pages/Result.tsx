@@ -82,9 +82,13 @@ const Result: React.FC = () => {
   // save
   const [showSaveModal, setShowSaveModal] = useState(false);
   const handleSaveClick = async () => {
-    if (!comboRef.current) return;
+    if (!comboRef.current) {
+      alert("Nothing to save!");
+      return;
+    };
     const canvas = await html2canvas(comboRef.current);
     const imageData = canvas.toDataURL("image/png");
+    console.log("I'm in the handleSaveClick function");
     try {
       const response = await fetch("api/save-photostrip", {
         method: "POST",
@@ -208,18 +212,33 @@ const Result: React.FC = () => {
           >
             Save
           </button>
-          <div ref={comboRef} className="photostrip-combo" style={bgStyle} >
-          {photos.map((photo, index) =>
 
-            photo ? ( <img key={index} src={photo} alt={`Captured ${index}`} className="individual-photo" />) 
-                  : (<div key={index} className="individual-photo placeholder">Empty</div>))}
+          <div className="photostrip-mask">
+            <div ref={comboRef} className="photostrip-combo" style={bgStyle}>
+              {photos.map((photo, index) =>
+                photo ? (
+                  <img
+                    key={index}
+                    src={photo}
+                    alt={`Captured ${index}`}
+                    className="individual-photo"
+                  />
+                ) : (
+                  <div key={index} className="individual-photo placeholder">
+                    Empty
+                  </div>
+                )
+                
+              )}
+              {(caption || showTimestamp) && (
+                <div className="footer-section">
+                  {caption && <div className="caption-display">{caption}</div>}
+                  {showTimestamp && <div className="timestamp">{timestamp}</div>}
+                </div>
+              )}
+              
+            </div>
 
-        {(caption || showTimestamp) && (
-          <div className="footer-section">
-            {caption && <div className="caption-display">{caption}</div>}
-            {showTimestamp && <div className="timestamp">{timestamp}</div>}
-          </div>
-        )}
           </div>
 
         </div>
@@ -229,6 +248,7 @@ const Result: React.FC = () => {
             <button onClick={handleShare}>Share</button>
         </div>
       </div>
+
    {showSaveModal && (
       <div className="save-modal-overlay">
         <div className="save-modal">

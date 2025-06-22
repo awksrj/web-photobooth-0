@@ -1,5 +1,6 @@
 import express from 'express';
 import router from './routes/auth.routes';
+import savePhotostripRouter from './routes/photos.routes';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -28,5 +29,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', router); // use all the routes defined in router and prefix them with /auth.
+app.use('/api', savePhotostripRouter);
 
 app.listen(5050, '0.0.0.0', () => console.log("Server running on port 5050"));
