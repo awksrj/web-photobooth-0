@@ -80,13 +80,17 @@ const Result: React.FC = () => {
   }
 
   // save
+
   const [showSaveModal, setShowSaveModal] = useState(false);
   const handleSaveClick = async () => {
     if (!comboRef.current) {
       alert("Nothing to save!");
       return;
     };
-    const canvas = await html2canvas(comboRef.current);
+    const canvas = await html2canvas(comboRef.current, {
+      width: comboRef.current.offsetWidth, // Get the rendered width
+      height: comboRef.current.offsetHeight,
+    });
     const imageData = canvas.toDataURL("image/png");
     alert("I'm in the handleSaveClick function");
     try {
@@ -107,15 +111,14 @@ const Result: React.FC = () => {
       else {
         console.error("Failed to save!");
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log("Error: ", error);
     }
   };
 
     const handleGoToGallery = () => {
-    navigate("/gallery"); 
-  };
+      navigate("/gallery"); 
+    };
 
   // account
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -200,7 +203,7 @@ const Result: React.FC = () => {
 
       <div className="main-content-wrapper">
         {/* text */}
-        <div style={{display: "flex", flexDirection: "row", alignItems: "center", gap: "10px"}}>
+        <div style={{display: "flex", flexDirection: "row", alignItems: "center", gap: "10px", padding: "10px"}}>
           <img src={printIcon} alt="Print Icon" style={{width: "40px", height: "40px", marginTop: "-10px", transform: "rotate(-10deg)"}}/>
           <div style={{ fontFamily: "title font", fontSize: "40px", marginBottom: "10px" }}>Printing ...</div>
         </div>
@@ -208,12 +211,11 @@ const Result: React.FC = () => {
         <div className="result-container">
           <button
             className="save-btn"
-            onClick={handleSaveClick}
-          >
+            onClick={handleSaveClick}>
             Save
           </button>
 
-          <div   className="photostrip-mask">
+          <div className="photostrip-mask">
             <div ref={comboRef}className="photostrip-combo" style={bgStyle}>
               {photos.map((photo, index) =>
                 photo ? (
@@ -236,9 +238,7 @@ const Result: React.FC = () => {
                   {showTimestamp && <div className="timestamp">{timestamp}</div>}
                 </div>
               )}
-              
             </div>
-
           </div>
 
         </div>

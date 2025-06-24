@@ -266,9 +266,9 @@ function Home() {
     if (navigator.share) {
       try {
         await navigator.share({
-          text: "Checkout this photobooth!",
+          // text: "Checkout this photobooth!",
           url: window.location.href,
-          title: "",
+          title: "Checkout this photobooth 💕🫧!",
         })
       }
       catch (err) {
