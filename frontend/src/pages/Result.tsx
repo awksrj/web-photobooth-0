@@ -88,7 +88,7 @@ const Result: React.FC = () => {
     };
     const canvas = await html2canvas(comboRef.current);
     const imageData = canvas.toDataURL("image/png");
-    console.log("I'm in the handleSaveClick function");
+    alert("I'm in the handleSaveClick function");
     try {
       const response = await fetch("api/save-photostrip", {
         method: "POST",
