@@ -213,8 +213,8 @@ const Result: React.FC = () => {
             Save
           </button>
 
-          <div className="photostrip-mask">
-            <div ref={comboRef} className="photostrip-combo" style={bgStyle}>
+          <div   className="photostrip-mask">
+            <div ref={comboRef}className="photostrip-combo" style={bgStyle}>
               {photos.map((photo, index) =>
                 photo ? (
                   <img
