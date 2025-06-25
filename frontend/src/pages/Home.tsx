@@ -44,9 +44,20 @@ function FeedbackPrompt({message, placeholder = "", onConfirm, onCancel}: Feedba
 }
 
 function Home() {
+  // account
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accountName, setAccountName] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
+  // settings
+  const [showSettings, setShowSettings] = useState(false);
+  const [editingField, setEditingField] = useState<string | null>(null);
+  const [username, setUsername] = useState('');
+  const [name, setName]         = useState('');
+  const [email, setEmail]       = useState('');
+  const [changingPwd, setChangingPwd] = useState(false);
+  const [currentPwd, setCurrentPwd]   = useState('');
+  const [newPwd, setNewPwd]           = useState('');
+  const [confirmPwd, setConfirmPwd]   = useState('');
 
   const AccountDropDown = () => (
     <div className='account-dropdown'>
@@ -73,7 +84,20 @@ function Home() {
 
     alert("You have been logged out successfully!");
   }
-  const handleToSettings = () => { };
+
+  // settings
+  const handleToSettings = () => {
+    setShowSettings(true);
+  };
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+  };
+
+  const handleSaveSettings = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowSettings(false);
+  };
+
   const handleNavigateToGallery = () => { }  
   const navigateToPhotobooth = () => { navigate('/photobooth'); }
   const navigateToPhotostrip = () => { navigate('/photostrip'); }
@@ -422,6 +446,194 @@ function Home() {
               Close
             </button>
           </div>
+        </div>
+      )}
+
+      {showSettings && (
+        <div className="settings-overlay">
+          <form className="settings-modal" onSubmit={handleSaveSettings}>
+            <h2>Account Settings</h2>
+
+            {/* Username row */}
+            <div className="settings-row">
+              <div className="settings-label">Username</div>
+
+              {editingField === 'username' ? (
+                <>
+                  <input
+                    className="settings-input"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                  />
+                  <div className="settings-row-actions">
+                    <button
+                      type="button"
+                      className="settings-btn small"
+                      onClick={() => setEditingField(null)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="settings-btn small cancel"
+                      onClick={() => setEditingField(null)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="settings-value">{username}</div>
+                  <button
+                    type="button"
+                    className="settings-btn edit"
+                    onClick={() => setEditingField('username')}
+                  >
+                    Edit
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Name row */}
+            <div className="settings-row">
+              <div className="settings-label">Name</div>
+
+              {editingField === 'name' ? (
+                <>
+                  <input
+                    className="settings-input"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                  />
+                  <div className="settings-row-actions">
+                    <button
+                      type="button"
+                      className="settings-btn small"
+                      onClick={() => setEditingField(null)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="settings-btn small cancel"
+                      onClick={() => setEditingField(null)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="settings-value">{name}</div>
+                  <button
+                    type="button"
+                    className="settings-btn edit"
+                    onClick={() => setEditingField('name')}
+                  >
+                    Edit
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Email row */}
+            <div className="settings-row">
+              <div className="settings-label">Email</div>
+
+              {editingField === 'email' ? (
+                <>
+                  <input
+                    className="settings-input"
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                  />
+                  <div className="settings-row-actions">
+                    <button
+                      type="button"
+                      className="settings-btn small"
+                      onClick={() => setEditingField(null)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="settings-btn small cancel"
+                      onClick={() => setEditingField(null)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="settings-value">{email}</div>
+                  <button
+                    type="button"
+                    className="settings-btn edit"
+                    onClick={() => setEditingField('email')}
+                  >
+                    Edit
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Password row */}
+            <div className="settings-row">
+              <div className="settings-label">Password</div>
+              <div className="settings-value">••••••••</div>
+              <button
+                type="button"
+                className="settings-btn edit"
+                onClick={() => setChangingPwd(true)}
+              >
+                Change password
+              </button>
+            </div>
+
+            {changingPwd && (
+              <div className="settings-row pwd-section">
+                <input
+                  className="settings-input"
+                  type="password"
+                  placeholder="Current password"
+                  value={currentPwd}
+                  onChange={e => setCurrentPwd(e.target.value)}
+                />
+                <input
+                  className="settings-input"
+                  type="password"
+                  placeholder="New password"
+                  value={newPwd}
+                  onChange={e => setNewPwd(e.target.value)}
+                />
+                <input
+                  className="settings-input"
+                  type="password"
+                  placeholder="Confirm new password"
+                  value={confirmPwd}
+                  onChange={e => setConfirmPwd(e.target.value)}
+                />
+              </div>
+            )}
+
+            {/* Bottom actions */}
+            <div className="settings-actions">
+              <button type="submit" className="settings-btn save">
+                Save all
+              </button>
+              <button
+                type="button"
+                className="settings-btn cancel"
+                onClick={() => setShowSettings(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       )}
 
